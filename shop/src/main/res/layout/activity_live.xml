@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+    
+<LinearLayout android:id="@+id/head"
+	android:layout_width="fill_parent"
+	android:layout_height="45dp"
+   	android:background="#439DD8"
+	android:gravity="center"
+   	android:orientation="horizontal">
+<TextView android:id="@+id/txt_title"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_weight="1"
+	android:gravity="center"
+	android:text="生活"
+	android:textColor="#FFFFFF"
+	android:textSize="18sp" />
+</LinearLayout>
+
+<!-- banner开始 -->
+<FrameLayout android:id="@+id/lay_banner"
+    android:layout_width="fill_parent"
+	android:layout_height="160dp"
+	android:orientation="vertical" >
+
+<com.ksec.utils.MyImgScroll 
+	android:id="@+id/viewpager"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"/>
+
+<RelativeLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="bottom">
+                    
+<LinearLayout android:id="@+id/vb"
+	android:layout_width="match_parent"
+	android:layout_height="10dp"
+	android:layout_marginBottom="5dp"
+	android:gravity="center"
+	android:orientation="horizontal" />	
+</RelativeLayout>
+</FrameLayout>  
+<!-- banner结束 -->
+
+<LinearLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+   	android:orientation="horizontal"
+   	android:layout_weight="1">        
+<ListView android:id="@+id/typeListView"
+	android:layout_width="70dp"
+	android:layout_height="fill_parent"
+	android:divider="#EEEEEE"
+	android:dividerHeight="2px"
+	android:visibility="@null"
+	android:scrollbars="none"/>
+
+<LinearLayout android:layout_width="wrap_content"
+	android:layout_height="fill_parent"
+   	android:orientation="horizontal"
+   	android:padding="5dp"> 	
+<LinearLayout android:layout_width="2dp"
+	android:layout_height="fill_parent"
+	android:background="#EEEEEE"/>	
+</LinearLayout>
+
+<LinearLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+   	android:orientation="horizontal"
+   	android:layout_weight="1">   	
+<ListView android:id="@+id/shopListView"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:divider="#EEEEEE"
+	android:dividerHeight="2px"
+	android:visibility="@null"
+	android:layout_weight="1"/>	
+</LinearLayout>	
+</LinearLayout>	
+
+</LinearLayout>

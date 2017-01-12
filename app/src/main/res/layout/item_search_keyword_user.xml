@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/user_icon"
+        tools:src="@drawable/ic_pimage_sticker_4_1"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        tools:text="莫小贤"
+        android:textSize="16sp"
+        android:textColor="@color/rv_title_color"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="+"
+        android:textColor="#fff"
+        android:background="@color/tab_color"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>

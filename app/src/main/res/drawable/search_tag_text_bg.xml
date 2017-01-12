@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item  android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/tab_color" >
+            </solid>
+
+            <corners android:radius="10dp"/>
+            <padding
+                android:bottom="4dp"
+                android:left="12dp"
+                android:right="12dp"
+                android:top="4dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/home_search_background" >
+            </solid>
+
+            <corners android:radius="10dp"/>
+            <padding
+                android:bottom="4dp"
+                android:left="12dp"
+                android:right="12dp"
+                android:top="4dp" />
+        </shape>
+    </item>
+</selector>

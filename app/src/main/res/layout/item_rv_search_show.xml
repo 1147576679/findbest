@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--搜索界面展示tab（标签）的内容的RecyclerView的item布局-->
+    <ImageView
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:id="@+id/iv_product"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        tools:src = "@drawable/bg_personal_wish_item_drawable_day"/>
+    <TextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="面部彩妆"
+        android:layout_gravity="center_horizontal"
+        />
+</LinearLayout>
