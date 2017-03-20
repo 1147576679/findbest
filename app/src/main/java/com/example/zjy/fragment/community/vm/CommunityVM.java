@@ -82,39 +82,6 @@ public class CommunityVM  {
         getDataFromServer(callBack);
     }
 
-//    public void getDataFromServer(String url, final Object o, final CallBack callback){
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(CommunityService.BASE_URL)
-//                .addConverterFactory(ScalarsConverterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//                .build();
-//
-//        retrofit.create(CommunityService.class)
-//                .getModel(url)
-//                .subscribeOn(Schedulers.io())
-//                .map(new Func1<String,Object>() {
-//                    @Override
-//                    public Object call(String s) {
-//                        return o;
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<Object>() {
-//                    @Override
-//                    public void call(Object object) {
-//
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        Log.i("tag", "错误信息"+throwable.getMessage());
-//                    }
-//                });
-
-//    }
-
-
 
     public interface CallBack{
         void callBack(List<CommunityBean> data);
