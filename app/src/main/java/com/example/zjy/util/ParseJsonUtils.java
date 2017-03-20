@@ -1,5 +1,6 @@
 package com.example.zjy.util;
 
+import com.example.zjy.fragment.community.bean.CommunityBean;
 import com.example.zjy.bean.HeadAndTabBean;
 import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.bean.IdsBean;
@@ -177,6 +178,20 @@ public class ParseJsonUtils {
             TypeToken<List<UserBean>> typeToken = new TypeToken<List<UserBean>>(){};
             return new Gson().fromJson(jsonArray.toString(),typeToken.getType());
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 解析发现列表
+     */
+    public static List<CommunityBean> parseCommunity(String json){
+        try {
+            JSONArray jsonArray = new JSONObject(json).getJSONObject("data").getJSONArray("list");
+            TypeToken<List<CommunityBean>> typeToken = new TypeToken<List<CommunityBean>>(){};
+            return new Gson().fromJson(jsonArray.toString(),typeToken.getType());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;

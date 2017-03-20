@@ -20,7 +20,6 @@ import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.LoadMoreWrapper;
-import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -247,7 +246,7 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
     //解析数据
     @Override
     public Object paresJson(String json, int requestCode) {
-        DiskLruCacheUtil.putJsonCache(url,json);
+//        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseContent(json);
     }
     //返回解析成功的值

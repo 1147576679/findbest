@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,6 +18,7 @@ import com.example.zjy.bantang.R;
 import com.example.zjy.bean.ItemDetailBean;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
+
 
 /**
  * Created by zjy on 2016/12/26.
@@ -51,14 +53,19 @@ public class RVPostListAdapter extends CommonAdapter<ItemDetailBean.DataBean.Pos
         VPPostListItemAdapter vpPostListItemAdapter = new VPPostListItemAdapter(fragmentManager,postListBean.getPics());
         viewPager.setAdapter(vpPostListItemAdapter);
         frameLayout.addView(viewPager,params);
-
-        holder.setText(R.id.tv_nickname, postListBean.getUser().getNickname())  //加载用户昵称
-                        .setText(R.id.tv_small_title, postListBean.getBrand_product().get(0).getBrand().getName() + "  " +
-                                postListBean.getBrand_product().get(0).getBrand().getAlias()
-                                + postListBean.getBrand_product().get(0).getTitle()) //加载商品名称
-                        .setText(R.id.tv_price, "¥"+" "+postListBean.getBrand_product().get(0).getPrice())
-                        .setText(R.id.tv_content,postListBean.getContent())    //加载用户描述商品的内容
-                        .setImageUrl(R.id.iv_small,postListBean.getBrand_product().get(0).getThumbnail_pic()); //加载小图
+        LinearLayout ll_brand = holder.getView(R.id.ll_brand);
+        if(postListBean.getBrand_product().size() == 0) {
+            ll_brand.setVisibility(View.GONE);
+        }else if(postListBean.getBrand_product().size() > 0){
+            holder.setText(R.id.tv_small_title, postListBean.getBrand_product().get(0).getBrand().getName() + "  " +
+                            postListBean.getBrand_product().get(0).getBrand().getAlias()
+                            + postListBean.getBrand_product().get(0).getTitle()) //加载商品名称
+                    .setText(R.id.tv_price, "¥" + " " + postListBean.getBrand_product().get(0).getPrice())
+                    .setImageUrl(R.id.iv_small, postListBean.getBrand_product().get(0).getThumbnail_pic()); //加载小图
+        }
+        holder.setText(R.id.tv_nickname, postListBean.getUser().getNickname())
+                .setText(R.id.tv_content, postListBean.getContent());    //加载用户描述商品的内容
+        //加载用户昵称
         ImageView user_icon = holder.getView(R.id.user_icon);
         Glide.with(mContext)
                 .load(postListBean.getUser().getAvatar())

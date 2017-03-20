@@ -3,6 +3,7 @@ package com.example.zjy.niklauslibrary.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     //当前显示的fragment
-    private BaseFragment showFragment;
+    private Fragment showFragment;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,14 +97,14 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param resid
      * @param baseFragment
      */
-    protected void showFragment(int resid, BaseFragment baseFragment){
+    protected void showFragment(int resid, Fragment baseFragment){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //隐藏展示的Fragment
         if(showFragment != null){
             fragmentTransaction.hide(showFragment);
         }
         //展示需要显示的Fragment对象
-        BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentByTag(baseFragment.getClass().getName());
+        Fragment fragment =  fragmentManager.findFragmentByTag(baseFragment.getClass().getName());
         if(fragment != null){
             //如果不为空则显示
             fragmentTransaction.show(fragment);

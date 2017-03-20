@@ -7,6 +7,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.zjy.fragment.HomeFragment;
+import com.example.zjy.fragment.community.CommunityFragment;
+import com.example.zjy.fragment.me.MeFragment;
+import com.example.zjy.fragment.message.MessageFragment;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
 import com.example.zjy.widget.PublishDialog;
 
@@ -46,10 +49,13 @@ public class MainActivity extends BaseActivity{
                         showFragment(R.id.frame_layout,new HomeFragment());
                         break;
                     case R.id.rb_message:
+                        showFragment(R.id.frame_layout,new MessageFragment());
                         break;
                     case R.id.rb_navagitor:
+                        showFragment(R.id.frame_layout,new CommunityFragment());
                         break;
                     case R.id.rb_personal:
+                        showFragment(R.id.frame_layout,new MeFragment());
                         break;
                 }
             }

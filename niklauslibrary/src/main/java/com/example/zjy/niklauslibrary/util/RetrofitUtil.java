@@ -18,10 +18,11 @@ public class RetrofitUtil {
     private DownListener downListener;
     private Context context;
 
-    public RetrofitUtil(Context context){
+    public RetrofitUtil(Context context) {
         this.context = context;
     }
-    public RetrofitUtil setDownListener(DownListener downListener){
+
+    public RetrofitUtil setDownListener(DownListener downListener) {
         this.downListener = downListener;
         return this;
     }
@@ -32,11 +33,11 @@ public class RetrofitUtil {
                 .getJSON(url)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, Object>() {
-                            @Override
-                            public Object call(String s) {
-                                if (downListener != null)
-                                    return downListener.paresJson(s,requestCode);
-                                return null;
+                    @Override
+                    public Object call(String s) {
+                        if (downListener != null)
+                            return downListener.paresJson(s, requestCode);
+                        return null;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,12 +45,12 @@ public class RetrofitUtil {
                     @Override
                     public void call(Object o) {
                         if (downListener != null)
-                            downListener.downSucc(o,requestCode);
+                            downListener.downSucc(o, requestCode);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if(downListener != null){
+                        if (downListener != null) {
                             downListener.fail(throwable);
                         }
                         Log.d("print", "call: " + throwable.getMessage());
@@ -69,7 +70,7 @@ public class RetrofitUtil {
                     @Override
                     public void call(Bitmap bitmap) {
                         if (bitmapListener != null)
-                            bitmapListener.downBitmapSucc(bitmap,requestCode);
+                            bitmapListener.downBitmapSucc(bitmap, requestCode);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -83,6 +84,7 @@ public class RetrofitUtil {
     public interface DownListener {
         //解析JSON时回调
         Object paresJson(String json, int requestCode);
+
         //解析完成后回调
         void downSucc(Object object, int requestCode);
 
@@ -95,7 +97,7 @@ public class RetrofitUtil {
         this.bitmapListener = bitmapListener;
     }
 
-    public interface DownBitmapListener{
+    public interface DownBitmapListener {
         void downBitmapSucc(Bitmap bitmap, int requestCode);
     }
 

@@ -15,7 +15,6 @@ import com.example.zjy.bantang.R;
 import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
-import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -132,7 +131,7 @@ public class HomeHotFragment extends BaseFragment implements RetrofitUtil.DownLi
 
     @Override
     public Object paresJson(String json, int requestCode) {
-        DiskLruCacheUtil.putJsonCache(url,json);
+//        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseContent(json);
     }
 

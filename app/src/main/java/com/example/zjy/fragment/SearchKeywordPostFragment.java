@@ -13,7 +13,6 @@ import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
-import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -89,7 +88,7 @@ public class SearchKeywordPostFragment extends BaseFragment implements RetrofitU
 
     @Override
     public Object paresJson(String json, int requestCode) {
-        DiskLruCacheUtil.putJsonCache(url,json);
+//        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseSearchPost(json);
     }
 

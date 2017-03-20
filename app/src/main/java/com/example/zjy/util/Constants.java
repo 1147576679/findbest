@@ -7,6 +7,8 @@ package com.example.zjy.util;
 public interface Constants {
     String[] TAB = {"单品","文章"};
 
+    String[] MESSAGETAB = {"通知","评论","推送"};
+
     String[] KEYWORD_TAB = {"单品","文章","晒单","用户"};
     /**
      * 头部和标签
@@ -85,4 +87,5 @@ public interface Constants {
      */
     String URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST= "http://open4.bantangapp.com/search/%s/listByKeyword?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=85584f845fe4691e8b254a48ff4ab6d0&track_deviceid=864394010748616&track_device_info=Nexus+6&channel_name=bantang&app_installtime=1481879391&app_versions=5.8.7&os_versions=4.4.2&screensize=720&v=19&keyword=%s&sort_type=0&page=0&pagesize=20";
 
+    String URL_COMMUNITY = "http://open4.bantangapp.com/post/index/listByNew?com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=96fc7c7373d2dc9aebe5e5d73e93256f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&page=%d&pagesize=20";
 }

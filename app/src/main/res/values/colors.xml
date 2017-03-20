@@ -25,8 +25,8 @@
 
     <color name="search_product_recyclerview_bg">#F4F4F4</color>
 
-    <color name="search_product_by_tag_content_text">#C6C6C6</color>
-    <color name="search_product_by_tag_title_text">#5A5A5A</color>
+    <color name="search_product_by_tag_content_text">#6e6e6e</color>
+    <color name="search_product_by_tag_title_text">#797979</color>
 
     <color name="radio_button_text_color">#D3D3D3</color>
     <color name="publish_dialog_bg">#88626361</color>

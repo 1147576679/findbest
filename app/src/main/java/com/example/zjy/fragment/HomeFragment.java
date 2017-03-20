@@ -1,5 +1,6 @@
 package com.example.zjy.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -16,7 +17,6 @@ import com.example.zjy.bantang.SearchActivity;
 import com.example.zjy.bean.HeadAndTabBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.util.ConvenientBannerUtils;
-import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -48,6 +48,10 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //缓存广告栏图片的集合
     private List<String> mList;
 
+    public static Intent newInstance(Context context){
+        return new Intent(context,SearchActivity.class);
+    }
+
 //    @Bind(R.id.tv_search)
 //    TextView tv_search;
 
@@ -70,7 +74,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //解析json
     @Override
     public Object paresJson(String json, int requestCode) {
-        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB,json);
+//        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB,json);
         return ParseJsonUtils.parse(json);
     }
     //解析完成
@@ -134,7 +138,8 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //点击文本搜索框跳转到搜索Activity
     @OnClick(R.id.tv_search)
     public void click(TextView textView){
-        Intent intent = new Intent(getActivity(), SearchActivity.class);
-        getContext().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), SearchActivity.class);
+//        getContext().startActivity(intent);
+        getActivity().startActivity(newInstance(getActivity()));
     }
 }

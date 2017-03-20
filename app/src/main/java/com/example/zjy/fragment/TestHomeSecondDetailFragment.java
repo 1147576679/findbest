@@ -1,5 +1,6 @@
 package com.example.zjy.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zjy.adapter.RVContentAdapter;
 import com.example.zjy.adapter.RVPostListAdapter;
 import com.example.zjy.adapter.RVProductAdapter;
+import com.example.zjy.bantang.PhotoViewActivity;
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.ItemDetailBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
@@ -24,7 +26,6 @@ import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
-import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -140,7 +141,7 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
     @Override
     public Object paresJson(String json, int requestCode) {
 //        Log.i("tag", "paresJson: "+json);
-        DiskLruCacheUtil.putJsonCache(url,json);
+//        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseItemDetail(json);
     }
 
@@ -155,20 +156,6 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
         if(itemDetailBean.getData().getProduct_list() != null){
             //product_list 不为空，使用该布局适配器
             commonAdapter = new RVProductAdapter(getContext());
-//            headerAndFooterWrapper = new HeaderAndFooterWrapper(commonAdapter);
-//            HeadViewHomeItemDetail headViewHomeItemDetail = new HeadViewHomeItemDetail(getContext());
-//            headViewHomeItemDetail.setData(itemDetailBean.getData());
-//            headerAndFooterWrapper.addHeaderView(headViewHomeItemDetail);
-//            //加载底部创建改文章日期以及收藏数的视图
-//            FootViewTypeProduct footView = new FootViewTypeProduct(getContext());
-//            footView.setDataBean(itemDetailBean.getData());
-//            headerAndFooterWrapper.addFootView(footView);
-//
-////            initFootView();
-//            footerView = new FooterView(getContext());
-//            footerView.setID(mId);
-//            headerAndFooterWrapper.addFootView(footerView);
-//            rv_item_detail.setAdapter(headerAndFooterWrapper);
             initInnerHeadFoot(itemDetailBean);
             commonAdapter.addDataAll(itemDetailBean.getData().getProduct_list());
         }else if(itemDetailBean.getData().getPost_list() != null){
@@ -180,8 +167,16 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
             commonAdapter.addDataAll(itemDetailBean.getData().getPost_list());
         }else if(itemDetailBean.getData().getContent_list() != null){
             //content_list 不为空时使用此布局适配器
-            commonAdapter = new RVContentAdapter(getContext());
-
+            commonAdapter = new RVContentAdapter(getContext(), new RVContentAdapter.ClickImageListener() {
+                @Override
+                public void onClick(String url, int position) {
+                    Intent intent = new Intent(getContext(), PhotoViewActivity.class);
+                    intent.putExtra("picUrl",url);
+                    Log.i("tag", "onClick:点击了图片 "+ position);
+                    getContext().startActivity(intent);
+                    getActivity().overridePendingTransition(0,0);
+                }
+            });
             initContent_listFootView(itemDetailBean);
             commonAdapter.addDataAll(itemDetailBean.getData().getContent_list());
         }else if(itemDetailBean.getData().getArticle_content() != null){
