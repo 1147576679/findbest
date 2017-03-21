@@ -116,7 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             showFragment = baseFragment;
         }
         //最后提交事务
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     /**

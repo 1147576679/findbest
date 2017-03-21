@@ -1,5 +1,8 @@
 package com.example.zjy.bantang;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,7 +14,12 @@ import com.example.zjy.fragment.community.CommunityFragment;
 import com.example.zjy.fragment.me.MeFragment;
 import com.example.zjy.fragment.message.MessageFragment;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
+import com.example.zjy.niklauslibrary.util.ShareUtils;
 import com.example.zjy.widget.PublishDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,6 +37,7 @@ public class MainActivity extends BaseActivity{
 
 
 
+
     @Override
     public int getContentId() {
         return R.layout.activity_main;
@@ -36,6 +45,7 @@ public class MainActivity extends BaseActivity{
 
     @Override
     protected void init() {
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -55,7 +65,12 @@ public class MainActivity extends BaseActivity{
                         showFragment(R.id.frame_layout,new CommunityFragment());
                         break;
                     case R.id.rb_personal:
-                        showFragment(R.id.frame_layout,new MeFragment());
+                        if(!ShareUtils.getPutBoolean("isLogin")){
+//                            startActivityForResult(new Intent(MainActivity.this,RegisterActivity.class),0x001);
+                            startActivity(newInstance(MainActivity.this));
+                        }else {
+                            showFragment(R.id.frame_layout,new MeFragment());
+                        }
                         break;
                 }
             }
@@ -73,6 +88,15 @@ public class MainActivity extends BaseActivity{
         publishDialog.show();
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if(requestCode == 0x001 && resultCode == 0x002){
+//            boolean registerSuccess = data.getBooleanExtra("registerSuccess", false);
+//            if(registerSuccess){
+//                showFragment(R.id.frame_layout,new MeFragment());
+//            }
+//        }
+//    }
 
     //监听退出应用事件
     @Override
@@ -95,4 +119,23 @@ public class MainActivity extends BaseActivity{
         return false;
     }
 
+    public static Intent newInstance(Context context){
+        return new Intent(context,RegisterActivity.class);
+    }
+
+    //接收用户注册成功信息执行相应的操作
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void registerSuccess(Boolean bool){
+        Log.i("tag", "registerSuccess: 收到消息");
+        if(bool) {
+            showFragment(R.id.frame_layout, new MeFragment());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i("tag", "onDestroy: 执行了");
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

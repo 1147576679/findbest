@@ -81,15 +81,6 @@ public class SearchActivity extends BaseActivity implements RetrofitUtil.DownLis
 
     @Override
     protected void bindListener() {
-//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
-//
-//                }
-//                return true;
-//            }
-//        });
         //关键字搜索监听加载数据
         editText.addTextChangedListener(new TextWatcher() {
             @Override

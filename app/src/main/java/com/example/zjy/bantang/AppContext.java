@@ -3,6 +3,9 @@ package com.example.zjy.bantang;
 import android.app.Application;
 import android.graphics.Typeface;
 
+import com.example.zjy.dbhelper.DataBaseManage;
+import com.example.zjy.niklauslibrary.util.ShareUtils;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 
@@ -24,6 +27,12 @@ public class AppContext extends Application {
         ShareSDK.initSDK(getApplicationContext());
         instance = (AppContext) getApplicationContext();
         typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),"fonts/PingFangRegular.ttf");
+
+        //初始化数据库
+        DataBaseManage.newInstance(getApplicationContext());
+
+        //初始化SharedPreferences
+        ShareUtils.init(getApplicationContext());
     }
 
     public static AppContext getInstance(){
