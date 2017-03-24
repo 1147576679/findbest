@@ -53,7 +53,8 @@ public class RetrofitUtil {
                         if (downListener != null) {
                             downListener.fail(throwable);
                         }
-                        Log.d("print", "call: " + throwable.getMessage());
+                        throwable.printStackTrace();
+//                        Log.d("print", "call: " + );
                     }
                 });
         return this;

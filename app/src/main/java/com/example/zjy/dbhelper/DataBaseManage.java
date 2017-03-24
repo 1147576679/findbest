@@ -48,6 +48,6 @@ public class DataBaseManage {
         while (cursor.moveToNext() && cursor.getCount() > 0){
             return cursor.getString(cursor.getColumnIndex("user_phone"));
         }
-        return null;
+        return "";
     }
 }

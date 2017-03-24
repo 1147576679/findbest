@@ -47,7 +47,7 @@
         <activity android:name=".SearchKeywordTopicResultActivity" />
         <activity android:name=".IdsActivity" />
         <activity android:name=".PhotoViewActivity" />
-        <!--Jpush的广播接收者-->
+        <!-- Jpush的广播接收者 -->
         <receiver
             android:name="com.example.zjy.receiver.PushReceiver"
             android:enabled="true">
@@ -61,7 +61,7 @@
             </intent-filter>
         </receiver>
 
-        <!--第三方分享-->
+        <!-- 第三方分享 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -102,7 +102,8 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

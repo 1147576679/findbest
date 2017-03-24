@@ -16,6 +16,7 @@ import com.example.zjy.bantang.R;
 import com.example.zjy.bean.ItemDetailBean;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
+import com.example.zjy.widget.PFTextView;
 
 
 /**
@@ -74,7 +75,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                     ll_dynamic_add.addView(imageView);
                     break;
                 case 2:
-                    TextView textView = new TextView(mContext);
+                    TextView textView = new PFTextView(mContext);
                     textView.setText(contentListBean.getText_content());
 //                    FontHelper.injectFont(textView);
                     textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getSize(R.dimen.content_list_text_size));

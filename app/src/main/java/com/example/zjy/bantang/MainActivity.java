@@ -1,7 +1,5 @@
 package com.example.zjy.bantang;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
@@ -35,7 +33,10 @@ public class MainActivity extends BaseActivity{
     //点击发表文章imageView的标志为
     private boolean flag;
 
-
+    private HomeFragment homeFragment;
+    private MessageFragment messageFragment;
+    private CommunityFragment communityFragment;
+    private MeFragment meFragment;
 
 
     @Override
@@ -46,6 +47,10 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void init() {
         EventBus.getDefault().register(this);
+        homeFragment = new HomeFragment();
+        messageFragment = new MessageFragment();
+        communityFragment = new CommunityFragment();
+        meFragment = new MeFragment();
     }
 
     @Override
@@ -56,20 +61,20 @@ public class MainActivity extends BaseActivity{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.rb_home:
-                        showFragment(R.id.frame_layout,new HomeFragment());
+                        showFragment(R.id.frame_layout,homeFragment);
                         break;
                     case R.id.rb_message:
-                        showFragment(R.id.frame_layout,new MessageFragment());
+                        showFragment(R.id.frame_layout,messageFragment);
                         break;
                     case R.id.rb_navagitor:
-                        showFragment(R.id.frame_layout,new CommunityFragment());
+                        showFragment(R.id.frame_layout,communityFragment);
                         break;
                     case R.id.rb_personal:
                         if(!ShareUtils.getPutBoolean("isLogin")){
 //                            startActivityForResult(new Intent(MainActivity.this,RegisterActivity.class),0x001);
-                            startActivity(newInstance(MainActivity.this));
+                            startActivity(RegisterActivity.newInstance(MainActivity.this));
                         }else {
-                            showFragment(R.id.frame_layout,new MeFragment());
+                            showFragment(R.id.frame_layout,meFragment);
                         }
                         break;
                 }
@@ -119,16 +124,28 @@ public class MainActivity extends BaseActivity{
         return false;
     }
 
-    public static Intent newInstance(Context context){
-        return new Intent(context,RegisterActivity.class);
-    }
+
 
     //接收用户注册成功信息执行相应的操作
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void registerSuccess(Boolean bool){
-        Log.i("tag", "registerSuccess: 收到消息");
+//        Log.i("tag", "registerSuccess: 收到消息");
         if(bool) {
             showFragment(R.id.frame_layout, new MeFragment());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiver(String info){
+//        Log.i("tag", "receiver: "+info);
+        if("loginSuccess".equals(info)){
+            showFragment(R.id.frame_layout,meFragment);
+        }else if("logoutSuccess".equals(info)){
+            home_radio_group.getChildAt(0).performClick();
+//            showFragment(R.id.frame_layout,homeFragment);
+        }else if("cancel".equals(info)){
+            home_radio_group.getChildAt(0).performClick();
+//            showFragment(R.id.frame_layout,homeFragment);
         }
     }
 

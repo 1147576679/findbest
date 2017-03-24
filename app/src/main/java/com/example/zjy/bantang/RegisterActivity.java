@@ -1,5 +1,7 @@
 package com.example.zjy.bantang;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +45,7 @@ public class RegisterActivity extends BaseActivity {
 
     @OnClick(R.id.img_btn_close)
     public void imgClick(ImageButton imageButton){
+        EventBus.getDefault().post("cancel");
         finish();
 //        overridePendingTransition();
     }
@@ -53,6 +56,8 @@ public class RegisterActivity extends BaseActivity {
         String user_password = userPassword.getText().toString();
         if(TextUtils.isEmpty(user_phone) || TextUtils.isEmpty(user_password)){
             Toast.makeText(this, "手机号或者密码不能为空", Toast.LENGTH_SHORT).show();
+        }else if(!TextUtils.isEmpty(DataBaseManage.getUser(user_phone))){
+            Toast.makeText(this, "用户已注册", Toast.LENGTH_SHORT).show();
         }else {
             User user = new User(user_phone,user_password);
             DataBaseManage.savaUser(user);
@@ -61,5 +66,15 @@ public class RegisterActivity extends BaseActivity {
             finish();
         }
     }
+
+    @OnClick(R.id.to_login)
+    public void tvClick(TextView textView){
+        startActivity(LoginActivity.newInstane(this));
+        finish();
+    }
+
+    public static Intent newInstance(Context context){
+        return new Intent(context,RegisterActivity.class);
+}
 
 }
