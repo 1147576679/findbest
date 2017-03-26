@@ -55,12 +55,12 @@ public class CommunityFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        initPtr();
-        initRv();
+        initView();
     }
 
-    //初始化下拉刷新
-    private void initPtr() {
+
+    private void initView() {
+        //初始化下拉刷新
         PtrHeadView ptrHeadView = new PtrHeadView(getContext());
         communityPtr.setHeaderView(ptrHeadView);
         communityPtr.addPtrUIHandler(ptrHeadView);
@@ -70,41 +70,37 @@ public class CommunityFragment extends Fragment {
                 vm.refresh(new CommunityVM.CallBack() {
                     @Override
                     public void callBack(List<CommunityBean> data) {
-                        initViews(data);
+                        mData = data;
+                        adapter.notifyDataSetChanged();
                         frame.refreshComplete();
                     }
                 });
             }
         });
         ptrHeadView.setLastUpdateTimeRelateObject(this);
-    }
 
-    //初始化RecyclerView
-    private void initRv() {
+        //初始化RecyclerView
         communityRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        communityRv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST,R.drawable.divider_bg02));
+        communityRv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_bg02));
         vm = new CommunityVM();
         vm.getDataFromServer(new CommunityVM.CallBack() {
             @Override
             public void callBack(List<CommunityBean> data) {
-                initViews(data);
+                mData = data;
+                adapter = new CommunityAdapter(getContext(), R.layout.item_community_rv, mData);
+                initHeadAndFoot();
+                initLoadMore();
             }
         });
     }
 
-    //初始化视图
-    private void initViews(List<CommunityBean> data) {
-        mData = data;
-        adapter = new CommunityAdapter(getContext(), R.layout.item_community_rv, mData);
-        initHeadAndFoot();
-        initLoadMore();
-    }
     //初始化RecyclerView头部
-    public void initHeadAndFoot(){
+    public void initHeadAndFoot() {
         headWrapper = new HeaderAndFooterWrapper(adapter);
-        headView = LayoutInflater.from(getContext()).inflate(R.layout.layout_community_head,communityRv,false);
+        headView = LayoutInflater.from(getContext()).inflate(R.layout.layout_community_head, communityRv, false);
         headWrapper.addHeaderView(headView);
     }
+
     //初始化RecyclerView上啦加载
     private void initLoadMore() {
         loadMore = new LoadMoreWrapper(headWrapper);

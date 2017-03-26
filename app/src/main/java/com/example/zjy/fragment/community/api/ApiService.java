@@ -8,8 +8,9 @@ import rx.Observable;
  * Created by zjy on 2017/3/16.
  */
 
-public interface CommunityService {
+public interface ApiService {
     String BASE_URL = "http://www.baidu.com";
     @GET
     Observable<String> getModel(@Url String url);
+
 }
