@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:hint="手机号"
-        android:drawableLeft="@drawable/ic_login_phone_normal"/>
+        android:drawableLeft="@drawable/edittext_phone"/>
 
     <EditText
         android:id="@+id/user_password"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:hint="密码"
-        android:drawableLeft="@drawable/ic_login_pass_normal"/>
+        android:drawableLeft="@drawable/edittext_password"/>
 
     <Button
         android:layout_marginLeft="32dp"
@@ -54,5 +54,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="登录"
+        android:background="@color/login_button"
         android:textColor="#fff"/>
 </LinearLayout>

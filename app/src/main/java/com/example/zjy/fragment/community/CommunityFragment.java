@@ -1,5 +1,6 @@
 package com.example.zjy.fragment.community;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.zjy.bantang.R;
 import com.example.zjy.fragment.community.adapter.CommunityAdapter;
-import com.example.zjy.fragment.community.bean.CommunityBean;
+import com.example.zjy.fragment.community.bean.CommunityVo;
 import com.example.zjy.fragment.community.vm.CommunityVM;
 import com.example.zjy.niklauslibrary.rvhelper.divider.DividerItemDecoration;
 import com.example.zjy.widget.PtrHeadView;
@@ -43,7 +45,10 @@ public class CommunityFragment extends Fragment {
     private View headView;
 
     private CommunityVM vm;
-    private List<CommunityBean> mData = new ArrayList<>();
+    private List<CommunityVo> mData = new ArrayList<>();
+
+    @Bind(R.id.frame_anim)
+    ImageView frameAnim;
 
     @Nullable
     @Override
@@ -60,6 +65,8 @@ public class CommunityFragment extends Fragment {
 
 
     private void initView() {
+        final AnimationDrawable animationDrawable = (AnimationDrawable) frameAnim.getDrawable();
+        animationDrawable.start();
         //初始化下拉刷新
         PtrHeadView ptrHeadView = new PtrHeadView(getContext());
         communityPtr.setHeaderView(ptrHeadView);
@@ -69,10 +76,12 @@ public class CommunityFragment extends Fragment {
             public void onRefreshBegin(final PtrFrameLayout frame) {
                 vm.refresh(new CommunityVM.CallBack() {
                     @Override
-                    public void callBack(List<CommunityBean> data) {
-                        mData = data;
-                        adapter.notifyDataSetChanged();
+                    public void callBack(List<CommunityVo> data) {
                         frame.refreshComplete();
+                        mData = data;
+                        adapter = new CommunityAdapter(getContext(), R.layout.item_community_rv, mData);
+                        initHeadAndFoot();
+                        initLoadMore();
                     }
                 });
             }
@@ -85,11 +94,13 @@ public class CommunityFragment extends Fragment {
         vm = new CommunityVM();
         vm.getDataFromServer(new CommunityVM.CallBack() {
             @Override
-            public void callBack(List<CommunityBean> data) {
+            public void callBack(List<CommunityVo> data) {
                 mData = data;
                 adapter = new CommunityAdapter(getContext(), R.layout.item_community_rv, mData);
                 initHeadAndFoot();
                 initLoadMore();
+                animationDrawable.stop();
+                frameAnim.setVisibility(View.GONE);
             }
         });
     }
@@ -111,7 +122,7 @@ public class CommunityFragment extends Fragment {
             public void onLoadMoreRequested() {
                 vm.loadMore(new CommunityVM.CallBack() {
                     @Override
-                    public void callBack(List<CommunityBean> data) {
+                    public void callBack(List<CommunityVo> data) {
                         mData.addAll(data);
                         loadMore.notifyDataSetChanged();
                     }

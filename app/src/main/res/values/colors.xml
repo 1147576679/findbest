@@ -31,4 +31,6 @@
     <color name="radio_button_text_color">#D3D3D3</color>
     <color name="publish_dialog_bg">#88626361</color>
 
+    <color name="login_button">#D6D7D7</color>
+
 </resources>

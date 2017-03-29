@@ -2,7 +2,9 @@ package com.example.zjy.bantang;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,37 +46,45 @@ public class RegisterActivity extends BaseActivity {
 
 
     @OnClick(R.id.img_btn_close)
-    public void imgClick(ImageButton imageButton){
+    public void imgClick(ImageButton imageButton) {
         EventBus.getDefault().post("cancel");
         finish();
 //        overridePendingTransition();
     }
 
     @OnClick(R.id.btn_register)
-    public void btnRegister(Button button){
-        String user_phone =  userPhone.getText().toString();
+    public void btnRegister(Button button) {
+        String user_phone = userPhone.getText().toString();
         String user_password = userPassword.getText().toString();
-        if(TextUtils.isEmpty(user_phone) || TextUtils.isEmpty(user_password)){
+        if (TextUtils.isEmpty(user_phone) || TextUtils.isEmpty(user_password)) {
             Toast.makeText(this, "手机号或者密码不能为空", Toast.LENGTH_SHORT).show();
-        }else if(!TextUtils.isEmpty(DataBaseManage.getUser(user_phone))){
+        } else if (!TextUtils.isEmpty(DataBaseManage.getUser(user_phone))) {
             Toast.makeText(this, "用户已注册", Toast.LENGTH_SHORT).show();
-        }else {
-            User user = new User(user_phone,user_password);
+        } else {
+            btnRegister.setHighlightColor(ContextCompat.getColor(this, R.color.tab_color));
+            User user = new User(user_phone, user_password);
             DataBaseManage.savaUser(user);
-            ShareUtils.setPutBoolean("isLogin",true);
+            ShareUtils.setPutBoolean("isLogin", true);
             EventBus.getDefault().post(true);
             finish();
         }
     }
 
     @OnClick(R.id.to_login)
-    public void tvClick(TextView textView){
+    public void tvClick(TextView textView) {
         startActivity(LoginActivity.newInstane(this));
         finish();
     }
 
-    public static Intent newInstance(Context context){
-        return new Intent(context,RegisterActivity.class);
-}
+    public static Intent newInstance(Context context) {
+        return new Intent(context, RegisterActivity.class);
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            EventBus.getDefault().post("cancel");
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

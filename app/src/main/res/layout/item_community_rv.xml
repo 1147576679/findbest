@@ -31,14 +31,15 @@
             android:layout_alignLeft="@id/tv_username"
             tools:text="6分钟" />
 
-        <Button
-            android:id="@+id/btn_focus"
+        <CheckBox
+            android:id="@+id/checkbox_focus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@color/tab_color"
+            android:background="@drawable/shape_check_box"
             android:text="+关注"
+            android:button="@null"
             android:textColor="#fff" />
     </RelativeLayout>
 

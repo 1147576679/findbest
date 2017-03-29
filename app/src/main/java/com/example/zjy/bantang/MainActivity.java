@@ -1,7 +1,9 @@
 package com.example.zjy.bantang;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -38,6 +40,10 @@ public class MainActivity extends BaseActivity{
     private CommunityFragment communityFragment;
     private MeFragment meFragment;
 
+    @Bind(R.id.frame_anim)
+    ImageView frameAnim;
+    private AnimationDrawable animationDrawable;
+
 
     @Override
     public int getContentId() {
@@ -51,6 +57,8 @@ public class MainActivity extends BaseActivity{
         messageFragment = new MessageFragment();
         communityFragment = new CommunityFragment();
         meFragment = new MeFragment();
+        animationDrawable = (AnimationDrawable) frameAnim.getDrawable();
+        animationDrawable.start();
     }
 
     @Override
@@ -147,6 +155,12 @@ public class MainActivity extends BaseActivity{
             home_radio_group.getChildAt(0).performClick();
 //            showFragment(R.id.frame_layout,homeFragment);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void frameAnimStop(Integer integer){
+        animationDrawable.stop();
+        frameAnim.setVisibility(View.GONE);
     }
 
     @Override

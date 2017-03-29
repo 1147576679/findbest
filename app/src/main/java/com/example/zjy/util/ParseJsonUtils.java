@@ -186,11 +186,11 @@ public class ParseJsonUtils {
     /**
      * 解析发现列表
      */
-    public static List<CommunityBean> parseCommunity(String json){
+    public static CommunityBean parseCommunity(String json){
         try {
-            JSONArray jsonArray = new JSONObject(json).getJSONObject("data").getJSONArray("list");
-            TypeToken<List<CommunityBean>> typeToken = new TypeToken<List<CommunityBean>>(){};
-            return new Gson().fromJson(jsonArray.toString(),typeToken.getType());
+            JSONObject jsonObject = new JSONObject(json).getJSONObject("data");
+//            TypeToken<List<CommunityBean>> typeToken = new TypeToken<List<CommunityBean>>(){};
+            return new Gson().fromJson(jsonObject.toString(),CommunityBean.class);
         } catch (JSONException e) {
             e.printStackTrace();
         }

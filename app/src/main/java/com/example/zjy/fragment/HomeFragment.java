@@ -21,6 +21,8 @@ import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +83,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     @Override
     public void downSucc(Object object, int requestCode) {
 //        ll_err.setVisibility(View.GONE);
+        EventBus.getDefault().post(0x001);
         HeadAndTabBean headAndTabBean = (HeadAndTabBean) object;
         Log.i("tag", "downSucc: "+headAndTabBean);
         final List<HeadAndTabBean.DataBean.BannerBean> banner = headAndTabBean.getData().getBanner();

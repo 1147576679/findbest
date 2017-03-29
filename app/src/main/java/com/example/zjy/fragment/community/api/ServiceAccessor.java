@@ -23,9 +23,9 @@ public class ServiceAccessor {
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(ApiService.BASE_URL)
                             .client(getOkHttp())
-                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
                             .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .build();
                     mService = retrofit.create(ApiService.class);
                 }

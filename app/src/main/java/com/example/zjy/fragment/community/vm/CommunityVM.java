@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.zjy.fragment.community.api.ServiceAccessor;
 import com.example.zjy.fragment.community.bean.CommunityBean;
+import com.example.zjy.fragment.community.bean.CommunityVo;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
 
@@ -37,26 +38,33 @@ public class CommunityVM {
 
     public void getDataFromServer(final CallBack callback) {
         url = String.format(Constants.URL_COMMUNITY, page);
+        Log.i("tag", "url: "+url);
         ServiceAccessor.getService()
                 .getModel(url)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<CommunityBean>>() {
+                .map(new Func1<String, CommunityBean>() {
                     @Override
-                    public List<CommunityBean> call(String s) {
-                        Log.i("tag", "call: "+s);
+                    public CommunityBean call(String s) {
                         return ParseJsonUtils.parseCommunity(s);
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<CommunityBean>>() {
+                .map(new Func1<CommunityBean, List<CommunityVo>>() {
                     @Override
-                    public void call(List<CommunityBean> communityBeen) {
-                        callback.callBack(communityBeen);
+                    public List<CommunityVo> call(CommunityBean communityBean) {
+                        return communityBean.transform();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<CommunityVo>>() {
+                    @Override
+                    public void call(List<CommunityVo> communityVo) {
+                        callback.callBack(communityVo);
+                        Log.i("tag", "CommunityVo: "+communityVo);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.i("tag", "call: "+throwable.getMessage());
+                       throwable.printStackTrace();
                     }
                 });
 
@@ -75,6 +83,6 @@ public class CommunityVM {
 
 
     public interface CallBack {
-        void callBack(List<CommunityBean> data);
+        void callBack(List<CommunityVo> data);
     }
 }

@@ -1,14 +1,12 @@
 package com.example.zjy.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,9 +39,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.DownListener {
     @Bind(R.id.rv)
     RecyclerView rv;
-    @Bind(R.id.iv_frame_anim)
-    ImageView mIv_frame_anim;
-    private AnimationDrawable mAnimationDrawable;
+
     //接收HomeViewPagerFragment传过来的值，拼接字符串的字段(extend)
     private String mUrl;
     //recyclerView适配器
@@ -99,11 +95,7 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
         rv.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL
                 ,false));
-        /**
-         * 开启帧动画（为了更好的用户体验）
-         */
-        mAnimationDrawable = (AnimationDrawable) mIv_frame_anim.getDrawable();
-        mAnimationDrawable.start();
+
         initLoadMore();
 //        setupPtrView();
     }
@@ -280,11 +272,6 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
 //                mRecyclerViewHomeAdapter.addDataAll(datas2);
 //                break;
 
-        //将帧动画结束
-        //停止开始动画
-        mAnimationDrawable.stop();
-        //隐藏图片
-        mIv_frame_anim.setVisibility(View.GONE);
         //刷新完成
         ptrClassicFrameLayout.refreshComplete();
 
