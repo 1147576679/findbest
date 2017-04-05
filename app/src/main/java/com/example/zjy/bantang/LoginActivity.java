@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -101,11 +100,11 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     }
 
     //监听用户按返回按钮
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            EventBus.getDefault().post("cancel");
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if(keyCode == KeyEvent.KEYCODE_BACK){
+//            EventBus.getDefault().post("cancel");
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

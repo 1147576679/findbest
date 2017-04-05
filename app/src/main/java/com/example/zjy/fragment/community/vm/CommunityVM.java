@@ -1,10 +1,8 @@
 package com.example.zjy.fragment.community.vm;
 
-import android.util.Log;
-
 import com.example.zjy.fragment.community.api.ServiceAccessor;
-import com.example.zjy.fragment.community.bean.CommunityBean;
 import com.example.zjy.fragment.community.bean.CommunityVo;
+import com.example.zjy.fragment.community.bean.dto.CommunityBean;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
 
@@ -38,7 +36,6 @@ public class CommunityVM {
 
     public void getDataFromServer(final CallBack callback) {
         url = String.format(Constants.URL_COMMUNITY, page);
-        Log.i("tag", "url: "+url);
         ServiceAccessor.getService()
                 .getModel(url)
                 .subscribeOn(Schedulers.io())
@@ -59,7 +56,6 @@ public class CommunityVM {
                     @Override
                     public void call(List<CommunityVo> communityVo) {
                         callback.callBack(communityVo);
-                        Log.i("tag", "CommunityVo: "+communityVo);
                     }
                 }, new Action1<Throwable>() {
                     @Override

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
+import com.example.zjy.niklauslibrary.util.ToastUtils;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
 import com.example.zjy.widget.FootViewTypeProduct;
@@ -222,6 +225,20 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
         TextView tv_nickname = (TextView) footView.findViewById(R.id.tv_nickname);
         TextView tvcollection = (TextView) footView.findViewById(R.id.tv_collection);
         CircleImageView user_icon = (CircleImageView) footView.findViewById(R.id.user_icon);
+        final CheckBox checkBoxFoucs = (CheckBox) footView.findViewById(R.id.checkbox_focus);
+        checkBoxFoucs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checkBoxFoucs.setChecked(true);
+                    checkBoxFoucs.setText("已关注");
+                    ToastUtils.showToast(getContext(),"关注成功");
+                }else {
+                    checkBoxFoucs.setChecked(false);
+                    checkBoxFoucs.setText("+关注");
+                }
+            }
+        });
         tvdate.setText("创建于"+"  "+itemDetailBean.getData().getCreate_time_str());
         tv_nickname.setText(itemDetailBean.getData().getUser().getNickname());
         tvcollection.setText(itemDetailBean.getData().getLikes());

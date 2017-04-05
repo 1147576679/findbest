@@ -89,13 +89,6 @@ public class RVItemDetailAdapter extends MultiItemTypeAdapter{
 
         @Override
         public void convert(ViewHolder holder, ItemDetailBean itemDetailBean, int position) {
-//            CustomListView customListView = holder.getView(rv_product);
-//            LVProductAdapter lvProductAdapter  = new LVProductAdapter(mContext);
-//            customListView.setAdapter(lvProductAdapter);
-//            HeadViewHomeItemDetail headViewHomeItemDetail = new HeadViewHomeItemDetail(mContext);
-//            headViewHomeItemDetail.setData(itemDetailBean.getData());
-//            customListView.addHeaderView(headViewHomeItemDetail);
-//            lvProductAdapter.addDatas(itemDetailBean.getData().getProduct_list());
 
             /**
              * product列表展示的RecyclerView
@@ -115,28 +108,12 @@ public class RVItemDetailAdapter extends MultiItemTypeAdapter{
             headViewHomeItemDetail.setData(itemDetailBean.getData());
             headerAndFooterWrapper.addHeaderView(headViewHomeItemDetail);
             //底部
-//            View footView = LayoutInflater.from(mContext).inflate(R.layout.layout_product_foot,null);
-//            TextView tvcollection = (TextView) footView.findViewById(R.id.tv_collection);
-//            TextView tvdate = (TextView) footView.findViewById(R.id.tv_date);
-//            tvcollection.setText(itemDetailBean.getData().getPraises());
-//            tvdate.setText(itemDetailBean.getData().getDatestr());
             FootViewTypeProduct footView = new FootViewTypeProduct(mContext);
             footView.setDataBean(itemDetailBean.getData());
             headerAndFooterWrapper.addFootView(footView);
             rv_product.setAdapter(headerAndFooterWrapper);
             rvProductAdapter.addDataAll(itemDetailBean.getData().getProduct_list());
 
-
-//            holder.setText(R.id.tv_title,itemDetailBean.getData().getTitle())
-//            .setText(R.id.tv_views,itemDetailBean.getData().getViews())
-//            .setText(R.id.tv_desc,itemDetailBean.getData().getDesc());
-//            ImageView user_icon = holder.getView(R.id.user_icon);
-//            Glide.with(mContext)
-//                    .load(itemDetailBean.getData().getUser().getAvatar())
-//                    .centerCrop()
-//                    .dontAnimate()
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(user_icon);
 
         }
     }
@@ -155,16 +132,6 @@ public class RVItemDetailAdapter extends MultiItemTypeAdapter{
 
         @Override
         public void convert(ViewHolder holder, ItemDetailBean itemDetailBean, int position) {
-//            holder.setText(R.id.tv_title,itemDetailBean.getData().getTitle())
-//                    .setText(R.id.tv_nickname,itemDetailBean.getData().getUser().getNickname())
-//                    .setText(R.id.tv_views,itemDetailBean.getData().getViews());
-//            CircleImageView user_icon = holder.getView(R.id.user_icon);
-//            Glide.with(mContext)
-//                    .load(itemDetailBean.getData().getUser().getAvatar())
-//                    .centerCrop()
-//                    .dontAnimate()
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(user_icon);
             LinearLayout ll_dynamic_add = holder.getView(R.id.ll_dynamic_add);
             ll_dynamic_add.removeAllViews();
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);

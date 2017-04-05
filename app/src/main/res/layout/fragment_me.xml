@@ -16,7 +16,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_pimage_sticker_4_1" />
+            android:src="@drawable/ic_default_avatar_circle" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,7 +84,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="8dp"
-            android:background="@color/divider"/>
+            android:background="@color/divider"
+            android:layout_marginTop="8dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

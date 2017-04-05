@@ -24,7 +24,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.frame_layout)
     FrameLayout frame_layout;
@@ -67,22 +67,22 @@ public class MainActivity extends BaseActivity{
         home_radio_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_home:
-                        showFragment(R.id.frame_layout,homeFragment);
-                        break;
-                    case R.id.rb_message:
-                        showFragment(R.id.frame_layout,messageFragment);
+                        showFragment(R.id.frame_layout, homeFragment);
                         break;
                     case R.id.rb_navagitor:
-                        showFragment(R.id.frame_layout,communityFragment);
+                        showFragment(R.id.frame_layout, communityFragment);
+                        break;
+                    case R.id.rb_message:
+                        showFragment(R.id.frame_layout, messageFragment);
                         break;
                     case R.id.rb_personal:
-                        if(!ShareUtils.getPutBoolean("isLogin")){
-//                            startActivityForResult(new Intent(MainActivity.this,RegisterActivity.class),0x001);
+                        if (!ShareUtils.getPutBoolean("isLogin")) {
                             startActivity(RegisterActivity.newInstance(MainActivity.this));
-                        }else {
-                            showFragment(R.id.frame_layout,meFragment);
+                            overridePendingTransition(R.anim.activity_in_bottom, R.anim.activity_no_anim);
+                        } else {
+                            showFragment(R.id.frame_layout, meFragment);
                         }
                         break;
                 }
@@ -92,33 +92,24 @@ public class MainActivity extends BaseActivity{
         home_radio_group.getChildAt(0).performClick();
 
     }
+
     //TODO
     //点击主页中的图标跳转到发表文章的界面
     @OnClick(R.id.iv_publish)
-    public void onClick(ImageView imageView){
+    public void onClick(ImageView imageView) {
 //        Toast.makeText(this, "...", Toast.LENGTH_SHORT).show();
         PublishDialog publishDialog = new PublishDialog(this);
         publishDialog.show();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(requestCode == 0x001 && resultCode == 0x002){
-//            boolean registerSuccess = data.getBooleanExtra("registerSuccess", false);
-//            if(registerSuccess){
-//                showFragment(R.id.frame_layout,new MeFragment());
-//            }
-//        }
-//    }
-
     //监听退出应用事件
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(System.currentTimeMillis() - end < 2000){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - end < 2000) {
                 finish();
                 System.exit(0);
-            }else{
+            } else {
                 Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
                 end = System.currentTimeMillis();
             }
@@ -126,6 +117,7 @@ public class MainActivity extends BaseActivity{
         }
         return super.onKeyDown(keyCode, event);
     }
+
     //关闭沉浸式状态栏
     @Override
     protected boolean isOpenTranslucent() {
@@ -133,32 +125,28 @@ public class MainActivity extends BaseActivity{
     }
 
 
-
     //接收用户注册成功信息执行相应的操作
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void registerSuccess(Boolean bool){
+    public void registerSuccess(Boolean bool) {
 //        Log.i("tag", "registerSuccess: 收到消息");
-        if(bool) {
+        if (bool) {
             showFragment(R.id.frame_layout, new MeFragment());
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void receiver(String info){
-//        Log.i("tag", "receiver: "+info);
-        if("loginSuccess".equals(info)){
-            showFragment(R.id.frame_layout,meFragment);
-        }else if("logoutSuccess".equals(info)){
+    public void receiver(String info) {
+        if ("loginSuccess".equals(info)) {
+            showFragment(R.id.frame_layout, meFragment);
+        } else if ("logoutSuccess".equals(info)) {
             home_radio_group.getChildAt(0).performClick();
-//            showFragment(R.id.frame_layout,homeFragment);
-        }else if("cancel".equals(info)){
+        } else if ("cancel".equals(info)) {
             home_radio_group.getChildAt(0).performClick();
-//            showFragment(R.id.frame_layout,homeFragment);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void frameAnimStop(Integer integer){
+    public void frameAnimStop(Integer integer) {
         animationDrawable.stop();
         frameAnim.setVisibility(View.GONE);
     }

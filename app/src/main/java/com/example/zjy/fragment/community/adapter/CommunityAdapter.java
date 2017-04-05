@@ -1,7 +1,6 @@
 package com.example.zjy.fragment.community.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -9,6 +8,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.zjy.bantang.R;
+import com.example.zjy.fragment.community.CommunityPostDetailActivity;
+import com.example.zjy.fragment.community.CommunityTopicDetailActivity;
 import com.example.zjy.fragment.community.bean.CommunityVo;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
 import com.example.zjy.niklauslibrary.util.ToastUtils;
@@ -26,7 +27,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommunityAdapter extends CommonAdapter<CommunityVo> {
     private Context context;
-
+    private static final int TOPIC = 1;
+    private static final int POST = 2;
     public CommunityAdapter(Context context, int layoutId, List<CommunityVo> datas) {
         super(context, layoutId, datas);
         this.context = context;
@@ -35,11 +37,9 @@ public class CommunityAdapter extends CommonAdapter<CommunityVo> {
     @Override
     protected void convert(ViewHolder holder, final CommunityVo communityVo, int position) {
         final CheckBox checkBoxFoucs = holder.getView(R.id.checkbox_focus);
-        Log.i("tag", "convert: "+checkBoxFoucs.isChecked());
         checkBoxFoucs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.i("tag", "onCheckedChanged: "+isChecked);
                 if(isChecked){
                     checkBoxFoucs.setChecked(true);
                     checkBoxFoucs.setText("已关注");
@@ -69,9 +69,20 @@ public class CommunityAdapter extends CommonAdapter<CommunityVo> {
                 .setText(R.id.tv_views, communityVo.views)
                 .setText(R.id.tv_shop_description, communityVo.content);
         ImageView ivShow = holder.getView(R.id.iv_show);
+        ivShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(communityVo.flag == TOPIC){
+                    context.startActivity(CommunityTopicDetailActivity.newInstance(context,communityVo.id));
+                }else if (communityVo.flag == POST){
+                    context.startActivity(CommunityPostDetailActivity.newInstance(context,communityVo.id));
+                }
+            }
+        });
         Glide.with(context)
                 .load(communityVo.ivUrl)
                 .centerCrop()
+                .placeholder(R.drawable.place_holder)
                 .thumbnail(0.1f)
                 .into(ivShow);
         CircleImageView ivUserIcon = holder.getView(R.id.iv_user_icon);

@@ -42,12 +42,6 @@
                         android:text="搜索值得买的好物"
                         android:drawableLeft="@drawable/ic_search_left_drawable"
                         android:drawablePadding="4dp"/>
-                    <ImageView
-                        android:layout_marginLeft="8dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_main_home_title_sign_in_small"/>
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>

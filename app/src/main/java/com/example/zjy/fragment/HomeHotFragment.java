@@ -1,13 +1,11 @@
 package com.example.zjy.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.zjy.adapter.RecyclerViewHomeAdapter;
 import com.example.zjy.bantang.HomeItemDetailActivity;
@@ -18,6 +16,7 @@ import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
+import com.example.zjy.widget.PtrHeadView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,9 +34,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class HomeHotFragment extends BaseFragment implements RetrofitUtil.DownListener {
     @Bind(R.id.rv)
     RecyclerView rv;
-    @Bind(R.id.iv_frame_anim)
-    ImageView mIv_frame_anim;
-    private AnimationDrawable mAnimationDrawable;
 
     private RecyclerViewHomeAdapter mRecyclerViewHomeAdapter;
     //下拉刷新
@@ -64,16 +60,16 @@ public class HomeHotFragment extends BaseFragment implements RetrofitUtil.DownLi
 
     @Override
     protected void init(View view) {
-        /**
-         * 开启帧动画（为了更好的用户体验）
-         */
-        mAnimationDrawable = (AnimationDrawable) mIv_frame_anim.getDrawable();
-        mAnimationDrawable.start();
         mRecyclerViewHomeAdapter = new RecyclerViewHomeAdapter(getContext());
         rv.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL
                 ,false));
         rv.setAdapter(mRecyclerViewHomeAdapter);
+        rv.setHasFixedSize(true);
+        PtrHeadView ptrHeadView = new PtrHeadView(getContext());
+        ptrClassicFrameLayout.setHeaderView(ptrHeadView);
+        ptrClassicFrameLayout.addPtrUIHandler(ptrHeadView);
+        ptrHeadView.setLastUpdateTimeRelateObject(this);
     }
 
     @Override
@@ -145,8 +141,6 @@ public class HomeHotFragment extends BaseFragment implements RetrofitUtil.DownLi
         mRecyclerViewHomeAdapter.clearData();
         mRecyclerViewHomeAdapter.addDataAll(datas);
         ptrClassicFrameLayout.refreshComplete();
-        mAnimationDrawable.stop();
-        mIv_frame_anim.setVisibility(View.GONE);
     }
 
     @Override

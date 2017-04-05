@@ -102,6 +102,7 @@ public abstract class UniversalAdapter<T> extends BaseAdapter {
             Glide.with(context)
                     .load(url)
                     .placeholder(placeholder)
+                    .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
             return this;

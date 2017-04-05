@@ -54,7 +54,7 @@ public class ImageLoader {
         public Builder() {
             this.type = ImageLoaderUtil.PIC_SMALL;
             this.url = "";
-            this.placeHolder = R.mipmap.bg_personal_wish_item_drawable_day;
+            this.placeHolder = R.drawable.place_holder;
             this.imgView = null;
             this.wifiStrategy = ImageLoaderUtil.LOAD_STRATEGY_NORMAL;
         }

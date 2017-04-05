@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_community_post"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.zjy.fragment.community.CommunityPostDetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/iv_back_arrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_title_bar_back_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="晒单详情"
+            android:textColor="@color/rv_title_color"
+            android:textSize="18sp" />
+    </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/post_community_vp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <com.example.zjy.widget.PFTextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                tools:text="dahdkfhsdkfhdfkafdkfkk" />
+
+            <CheckBox
+                android:id="@+id/checkbox_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/post_community_praise_checkbox"
+                android:button="@null" />
+
+            <com.example.zjy.widget.PFTextView
+                android:id="@+id/praise_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="0次赞"
+                android:textColor="@color/unselect_search" />
+
+            <com.example.zjy.widget.PFTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="分享给朋友"
+                android:textColor="@color/unselect_search" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.example.zjy.widget.PFTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@drawable/ic_topic_detail_share_weixin_friend"
+                    android:gravity="center"
+                    android:text="微信"
+                    android:textColor="@color/unselect_search" />
+
+                <com.example.zjy.widget.PFTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@drawable/ic_topic_detail_share_weixin_quan"
+                    android:gravity="center"
+                    android:text="朋友圈"
+                    android:textColor="@color/unselect_search" />
+
+                <com.example.zjy.widget.PFTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@drawable/ic_topic_detail_share_weibo"
+                    android:gravity="center"
+                    android:text="微博"
+                    android:textColor="@color/unselect_search" />
+
+                <com.example.zjy.widget.PFTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@drawable/ic_topic_detail_share_qzone"
+                    android:gravity="center"
+                    android:text="QQ空间"
+                    android:textColor="@color/unselect_search" />
+
+                <com.example.zjy.widget.PFTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:drawableTop="@drawable/ic_topic_detail_share_qq"
+                    android:gravity="center"
+                    android:text="QQ"
+                    android:textColor="@color/unselect_search" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/divider" />
+
+            <include layout="@layout/layout_creater" />
+
+            <include layout="@layout/layout_divider" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

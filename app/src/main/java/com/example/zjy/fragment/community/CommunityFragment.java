@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.zjy.bantang.R;
 import com.example.zjy.fragment.community.adapter.CommunityAdapter;
@@ -33,7 +34,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by zjy on 2017/1/4.
  */
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.community_ptr)
     PtrClassicFrameLayout communityPtr;
 
@@ -109,6 +110,15 @@ public class CommunityFragment extends Fragment {
     public void initHeadAndFoot() {
         headWrapper = new HeaderAndFooterWrapper(adapter);
         headView = LayoutInflater.from(getContext()).inflate(R.layout.layout_community_head, communityRv, false);
+        //达人榜
+        LinearLayout kolRank = (LinearLayout) headView.findViewById(R.id.kol_rank);
+        kolRank.setOnClickListener(this);
+        //文章榜
+        LinearLayout topicRank = (LinearLayout) headView.findViewById(R.id.topic_rank);
+        topicRank.setOnClickListener(this);
+        //晒单榜
+        LinearLayout postRank = (LinearLayout) headView.findViewById(R.id.post_rank);
+        postRank.setOnClickListener(this);
         headWrapper.addHeaderView(headView);
     }
 
@@ -135,5 +145,20 @@ public class CommunityFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.kol_rank:
+                startActivity(KolRankActivity.newInstance(getActivity()));
+                break;
+            case R.id.topic_rank:
+                startActivity(TopicRankActivity.newInstance(getActivity()));
+                break;
+            case R.id.post_rank:
+                startActivity(PostRankActivity.newInstance(getActivity()));
+                break;
+        }
     }
 }

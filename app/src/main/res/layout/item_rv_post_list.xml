@@ -17,7 +17,7 @@
             tools:src="@drawable/ic_pimage_sticker_4_1"
             android:layout_marginLeft="16dp"
             />
-        <TextView
+        <com.example.zjy.widget.PFTextView
             android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         <!--android:src="@drawable/bg_personal_wish_item_drawable_day"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="400dp" />-->
-    <TextView
+    <com.example.zjy.widget.PFTextView
         android:layout_margin="16dp"
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                 android:layout_height="80dp"
                 android:scaleType="fitXY"
                 />
-            <TextView
+            <com.example.zjy.widget.PFTextView
                 android:id="@+id/tv_small_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_toRightOf="@+id/iv_small"
                 android:layout_marginLeft="4dp"
                 />
-            <TextView
+            <com.example.zjy.widget.PFTextView
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center">
-                <TextView
+                <com.example.zjy.widget.PFTextView
                     android:id="@+id/tv_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

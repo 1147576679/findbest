@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.zjy.bantang.SearchActivity">
     <!--头部返回按钮和搜索框-->
@@ -32,8 +31,13 @@
             android:id="@+id/edit_text"
             android:layout_marginRight="16dp"
             android:singleLine="true"
+            android:drawableRight="@drawable/ic_title_bar_search_clear"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/divider"/>
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 
 import com.example.zjy.dbhelper.DataBaseManage;
 import com.example.zjy.niklauslibrary.util.ShareUtils;
+import com.squareup.leakcanary.LeakCanary;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
@@ -20,6 +21,13 @@ public class AppContext extends Application {
     public void onCreate() {
         super.onCreate();
 //        DiskLruCacheUtil.init(this);
+
+        if(LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+        LeakCanary.install(this);
+
+
         //初始化极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(getApplicationContext());

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zjy.bean.IdsBean;
+import com.example.zjy.fragment.community.CommunityTopicDetailActivity;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
@@ -114,10 +115,10 @@ public class IdsActivity extends BaseActivity implements RetrofitUtil.DownListen
             //点击RecyclerView的item跳转
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, IdsBean o, int position) {
-                Intent intent  = new Intent(IdsActivity.this, SearchKeywordTopicResultActivity.class);
-                intent.putExtra("id",o.getId());
+//                Intent intent  = new Intent(IdsActivity.this, Comm.class);
+//                intent.putExtra("id",o.getId());
 //                Log.i("tag", "onItemClick: "+o.getId());
-                startActivity(intent);
+                startActivity(CommunityTopicDetailActivity.newInstance(IdsActivity.this,o.getId()));
             }
 
             @Override

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/dateStr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="今天"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@color/message_push_item_date"/>
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_color"
+        android:padding="8dp">
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_avatar_circle"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="8款超级显瘦显身材的运动女装推荐"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv"
+            android:layout_toLeftOf="@+id/iv_next"
+            android:layout_marginLeft="8dp"/>
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_right_gray_day"/>
+    </RelativeLayout>
+</LinearLayout>

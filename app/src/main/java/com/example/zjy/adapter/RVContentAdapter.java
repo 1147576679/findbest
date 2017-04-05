@@ -37,7 +37,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
         LinearLayout ll_dynamic_add = holder.getView(R.id.ll_dynamic_add);
         ll_dynamic_add.removeAllViews();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,16,0,0);
+        layoutParams.setMargins(0,mContext.getResources().getDimensionPixelOffset(R.dimen.internal),0,0);
         /**
          * 动态添加TextView和ImageView
          */
@@ -61,7 +61,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                     int image_height = contentListBean.getImage_height();
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    params.setMargins(0,16,0,16);
+                    params.setMargins(0,mContext.getResources().getDimensionPixelOffset(R.dimen.internal),0,0);
                     params.width = (int) widthPixels;
                     params.height = (int) ((image_height / image_width ) * widthPixels);
                     imageView.setLayoutParams(params);
@@ -69,7 +69,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                     Glide.with(mContext)
                             .load(contentListBean.getImage_url())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.bg_personal_wish_item_drawable_day)
+                            .placeholder(R.drawable.place_holder)
                             .thumbnail(0.1f)
                             .into(imageView);
                     ll_dynamic_add.addView(imageView);

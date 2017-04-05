@@ -88,4 +88,16 @@ public interface Constants {
     String URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST= "http://open4.bantangapp.com/search/%s/listByKeyword?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=85584f845fe4691e8b254a48ff4ab6d0&track_deviceid=864394010748616&track_device_info=Nexus+6&channel_name=bantang&app_installtime=1481879391&app_versions=5.8.7&os_versions=4.4.2&screensize=720&v=19&keyword=%s&sort_type=0&page=0&pagesize=20";
 
     String URL_COMMUNITY = "http://open4.bantangapp.com/post/index/listByNew?com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=96fc7c7373d2dc9aebe5e5d73e93256f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&page=%d&pagesize=20";
+
+    String URL_COMMUNITY_DETAIL = "http://open4.bantangapp.com/topic/newInfo?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=bcd5dd56b6addf0d31a89c889e14c94f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&id=%s&trace_id=&search_key=&statistics_uv=0&is_night=0";
+
+    String URL_COMMUNITY_POST_DETAIL = "http://open4.bantangapp.com/post/post/info?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=bcd5dd56b6addf0d31a89c889e14c94f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&id=%s&trace_id=&search_key=";
+
+    String URL_KOL_RANK = "http://m.ibantang.com/toplist/userRankData?sortType=2";
+
+    String URL_TOPIC_RANK = "http://open4.bantangapp.com/topics/topic/listByRank?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=bcd5dd56b6addf0d31a89c889e14c94f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&page=0&pagesize=20&sort_type=3";
+
+    String URL_POST_RANK = "http://open4.bantangapp.com/post/post/listByRank?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=bcd5dd56b6addf0d31a89c889e14c94f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&page=0&pagesize=10&sort_type=3";
+
+    String URL_MESSAGE_PUSH = "http://open4.bantangapp.com/users/push/list?app_id=com.jzyd.BanTang&client_id=bt_app_android&client_secret=ffcda7a1c4ff338e05c42e7972ba7b8d&track_user_id=2766969&oauth_token=bcd5dd56b6addf0d31a89c889e14c94f&track_deviceid=864394010748616&channel_name=UMENG_CHANNEL&app_installtime=1483542714&app_versions=5.9.6.1&os_versions=4.4.2&screensize=720&v=24&track_device_info=vivo+X510t&page=0&pagesize=20&type_id=1%2C2%2C3%2C4%2C5%2C6";
 }

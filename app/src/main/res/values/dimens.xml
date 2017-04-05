@@ -6,4 +6,8 @@
     <dimen name="content_list_text_size">14sp</dimen>
 
     <dimen name="hottag_btn_size">12sp</dimen>
+
+    <dimen name="internal">8dp</dimen>
+    <dimen name="iv_dimen">120dp</dimen>
+    <dimen name="padding">2dp</dimen>
 </resources>

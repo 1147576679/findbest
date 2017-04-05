@@ -18,6 +18,7 @@ import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.LoadMoreWrapper;
+import com.example.zjy.niklauslibrary.util.CommonUtils;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -95,15 +96,16 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
         rv.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL
                 ,false));
-
+        rv.setHasFixedSize(true);
         initLoadMore();
-//        setupPtrView();
+        setupPtrView();
     }
 
     private void setupPtrView() {
         PtrHeadView ptrHeadView = new PtrHeadView(getContext());
         ptrClassicFrameLayout.setHeaderView(ptrHeadView);
         ptrClassicFrameLayout.addPtrUIHandler(ptrHeadView);
+        ptrHeadView.setLastUpdateTimeRelateObject(this);
     }
 
     /**
@@ -156,14 +158,6 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
 
     @Override
     protected void loadDatas() {
-        //加载数据
-//        if(mPosition != 2) {
-//            String url = String.format(mUrl, page);
-//            new RetrofitUtil(getContext()).setDownListener(this).downJson(url, 0x001);
-////            Log.i("tag", "------>: "+url);
-//        }else {
-//            new RetrofitUtil(getActivity()).setDownListener(this).downJson(mUrl,0x002);
-//        }
         switch (mPosition){
             case 0:
             case 1:
@@ -184,6 +178,9 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
         mRecyclerViewHomeAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener<HomeContentBean>() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, HomeContentBean homeContentBean, int position) {
+                if(CommonUtils.isFastDoubleClick(view)){
+                    return;
+                }
                 String id = homeContentBean.getId();
                 Log.d("tag", "onItemClick: "+position+"<>"+id);
                 Intent intent = new Intent(getActivity(), HomeItemDetailActivity.class);
@@ -203,18 +200,6 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
                 return false;
             }
         });
-//        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
-//            @Override
-//            public void onRefreshBegin(final PtrFrameLayout frame) {
-//                frame.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        frame.refreshComplete();
-//                    }
-//                },2000);
-//                loadDatas();
-//            }
-//        });
         /**
          * 下拉刷新监听
          */

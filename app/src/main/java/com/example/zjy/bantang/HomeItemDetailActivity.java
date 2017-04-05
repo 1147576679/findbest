@@ -76,23 +76,6 @@ public class HomeItemDetailActivity extends BaseActivity implements RetrofitUtil
         Log.i("tag", "init: "+mDatas.size());
     }
 
-//    @Override
-//    protected void loadDatas() {
-//        String url;
-//        switch (vpindex){
-//            case 0:
-//            case 1:
-//                url = String.format(Constants.URL_JINXUAN_YUANCHUANG,page);
-//                break;
-//            case 2:
-//                url = String.format(Constants.URL_HOT,extend);
-//                break;
-//            default:
-//                url = String.format(Constants.URL_OTHER,page,extend);
-//                break;
-//        }
-//        new RetrofitUtil(this).setDownListener(this).downJson(url, 0x001);
-//    }
 
     @Override
     protected void bindListener() {

@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
                 .indicatorSelect(R.drawable.ic_indicator_image_selected)
                 .indicatorUnselect(R.drawable.ic_indicator_image)
                 .orientation(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-                .time(2000)
+                .time(3000)
                 .onConvenientBannerListener(new ConvenientBannerUtils.OnConvenientBannerListener() {
                     @Override
                     public void onClick(int position) {

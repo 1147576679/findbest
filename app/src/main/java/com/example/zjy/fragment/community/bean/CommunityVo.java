@@ -12,6 +12,8 @@ public class CommunityVo {
     public String publish_time;
     public String views;
     public String shareUrl;
+    public int flag;
+    public String id;
 
     @Override
     public String toString() {

@@ -1,6 +1,6 @@
 package com.example.zjy.util;
 
-import com.example.zjy.fragment.community.bean.CommunityBean;
+import com.example.zjy.fragment.community.bean.dto.CommunityBean;
 import com.example.zjy.bean.HeadAndTabBean;
 import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.bean.IdsBean;
@@ -196,5 +196,8 @@ public class ParseJsonUtils {
         }
         return null;
     }
+
+
+
 
 }

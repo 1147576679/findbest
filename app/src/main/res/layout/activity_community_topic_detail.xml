@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_community_item_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.zjy.fragment.community.CommunityTopicDetailActivity">
+    <include layout="@layout/layout_head"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/topic_rv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

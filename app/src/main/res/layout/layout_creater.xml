@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/user_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@drawable/ic_pimage_sticker_4_1" />
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="作者"
+            android:textSize="12sp"
+            android:layout_toRightOf="@+id/user_icon"
+            android:layout_alignTop="@+id/user_icon"
+            android:layout_marginLeft="16dp"
+            />
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_author"
+            android:layout_alignBottom="@+id/user_icon"
+            tools:text="Larry"/>
+        <CheckBox
+            android:textColor="#fff"
+            android:id="@+id/checkbox_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="+关注"
+            android:background="@drawable/shape_check_box"
+            android:layout_alignParentRight="true"
+            android:button="@null"
+            android:layout_margin="4dp"/>
+    </RelativeLayout>
+</LinearLayout>

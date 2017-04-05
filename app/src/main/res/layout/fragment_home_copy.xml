@@ -15,13 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
         </com.bigkoo.convenientbanner.ConvenientBanner>
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:orientation="horizontal"
                 android:padding="4dp">
                 <TextView
@@ -35,14 +31,7 @@
                     android:text="搜索值得买的好物"
                     android:drawableLeft="@drawable/ic_search_left_drawable"
                     android:drawablePadding="4dp"/>
-                <ImageView
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_main_home_title_sign_in_small"/>
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
     </FrameLayout>
     <android.support.design.widget.TabLayout
         android:background="#fff"
