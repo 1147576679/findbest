@@ -19,6 +19,7 @@ import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.LoadMoreWrapper;
 import com.example.zjy.niklauslibrary.util.CommonUtils;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -112,25 +113,6 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
      * 初始化上拉加载
      */
     private void initLoadMore() {
-//        if(mPosition == 2) {
-//            //标签为热门是没有分页
-//            rv.setAdapter(mRecyclerViewHomeAdapter);
-//        }else {
-//            loadMoreWrapper = new LoadMoreWrapper(mRecyclerViewHomeAdapter);
-//            mFootView = LayoutInflater.from(getContext()).inflate(R.layout.load_more, null);
-//            mProgressbar = (ProgressBar) mFootView.findViewById(R.id.progress_bar);
-//            mLoading = (TextView) mFootView.findViewById(R.id.loading);
-//            //加载更多底部视图的点击事件
-//            mFootView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    loadDatas();
-//                }
-//            });
-//            loadMoreWrapper.setLoadMoreView(mFootView);
-//            //分页
-//            rv.setAdapter(loadMoreWrapper);
-//        }
         loadMoreWrapper = new LoadMoreWrapper(mRecyclerViewHomeAdapter);
         mFootView = LayoutInflater.from(getContext()).inflate(R.layout.load_more, null);
         mProgressbar = (ProgressBar) mFootView.findViewById(R.id.progress_bar);
@@ -167,6 +149,9 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
                 url = String.format(Constants.URL_OTHER,page,mUrl);
                 break;
         }
+        // TODO: 2017/4/10  备选方案
+//        String jsonCache = DiskLruCacheUtil.getJsonCache(url);
+//        Log.i("tag", "loadDatas: "+jsonCache);
         new RetrofitUtil(getContext()).setDownListener(this).downJson(url, 0x001);
     }
 
@@ -223,7 +208,8 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
     //解析数据
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.removeCache(url);
+        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseContent(json);
     }
     //返回解析成功的值
@@ -250,25 +236,9 @@ public class HomeViewPagerFragment extends BaseFragment implements RetrofitUtil.
                 loadDatas();
             }
         });
-
-//            case 0x002:
-//                List<HomeContentBean> datas2 = (List<HomeContentBean>) object;
-//                Log.i("tag", "downSucc: "+datas2);
-//                mRecyclerViewHomeAdapter.addDataAll(datas2);
-//                break;
-
         //刷新完成
         ptrClassicFrameLayout.refreshComplete();
 
-//        mLoadMoreWrapper = new LoadMoreWrapper(mRecyclerViewHomeAdapter);
-//        mLoadMoreWrapper.setLoadMoreView(R.layout.load_more);
-//        mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMoreRequested() {
-//                loadDatas();
-//            }
-//        });
-//        rv.setAdapter(mLoadMoreWrapper);
     }
     //网络异常时回调
     @Override

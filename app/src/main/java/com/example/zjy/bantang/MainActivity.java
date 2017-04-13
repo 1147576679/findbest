@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity {
     private CommunityFragment communityFragment;
     private MeFragment meFragment;
 
+    private int tag = 0;
+
     @Bind(R.id.frame_anim)
     ImageView frameAnim;
     private AnimationDrawable animationDrawable;
@@ -75,10 +77,18 @@ public class MainActivity extends BaseActivity {
                         showFragment(R.id.frame_layout, communityFragment);
                         break;
                     case R.id.rb_message:
-                        showFragment(R.id.frame_layout, messageFragment);
+                        if (!ShareUtils.getPutBoolean("isLogin")) {
+                            tag = R.id.rb_message;
+                            startActivity(RegisterActivity.newInstance(MainActivity.this));
+                            overridePendingTransition(R.anim.activity_in_bottom, R.anim.activity_no_anim);
+                        } else {
+                            showFragment(R.id.frame_layout, messageFragment);
+                        }
+//                        showFragment(R.id.frame_layout, messageFragment);
                         break;
                     case R.id.rb_personal:
                         if (!ShareUtils.getPutBoolean("isLogin")) {
+                            tag = R.id.rb_personal;
                             startActivity(RegisterActivity.newInstance(MainActivity.this));
                             overridePendingTransition(R.anim.activity_in_bottom, R.anim.activity_no_anim);
                         } else {
@@ -130,14 +140,22 @@ public class MainActivity extends BaseActivity {
     public void registerSuccess(Boolean bool) {
 //        Log.i("tag", "registerSuccess: 收到消息");
         if (bool) {
-            showFragment(R.id.frame_layout, new MeFragment());
+            if(tag == R.id.rb_message){
+                showFragment(R.id.frame_layout,messageFragment);
+            }else if (tag == R.id.rb_personal){
+                showFragment(R.id.frame_layout,meFragment);
+            }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receiver(String info) {
         if ("loginSuccess".equals(info)) {
-            showFragment(R.id.frame_layout, meFragment);
+            if(tag == R.id.rb_message){
+                showFragment(R.id.frame_layout,messageFragment);
+            }else if (tag == R.id.rb_personal){
+                showFragment(R.id.frame_layout,meFragment);
+            }
         } else if ("logoutSuccess".equals(info)) {
             home_radio_group.getChildAt(0).performClick();
         } else if ("cancel".equals(info)) {

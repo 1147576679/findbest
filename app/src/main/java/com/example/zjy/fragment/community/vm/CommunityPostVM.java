@@ -3,6 +3,7 @@ package com.example.zjy.fragment.community.vm;
 import com.example.zjy.fragment.community.api.ServiceAccessor;
 import com.example.zjy.fragment.community.bean.CommunityPostVO;
 import com.example.zjy.fragment.community.bean.dto.CommunityPostDTO;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.util.Constants;
 import com.google.gson.Gson;
 
@@ -17,13 +18,17 @@ import rx.schedulers.Schedulers;
 
 public class CommunityPostVM {
     public static void getData(String id, final CallBack callBack){
-        String url = String.format(Constants.URL_COMMUNITY_POST_DETAIL,id);
+        final String url = String.format(Constants.URL_COMMUNITY_POST_DETAIL,id);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         ServiceAccessor.getService()
                 .getModel(url)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, CommunityPostDTO>() {
                     @Override
                     public CommunityPostDTO call(String s) {
+                        DiskLruCacheUtil.removeCache(url);
+                        DiskLruCacheUtil.putJsonCache(url,s);
                         return new Gson().fromJson(s,CommunityPostDTO.class);
                     }
                 })

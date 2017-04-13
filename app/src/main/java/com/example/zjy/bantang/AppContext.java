@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Typeface;
 
 import com.example.zjy.dbhelper.DataBaseManage;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.ShareUtils;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -20,7 +21,7 @@ public class AppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        DiskLruCacheUtil.init(this);
+        DiskLruCacheUtil.init(this);
 
         if(LeakCanary.isInAnalyzerProcess(this)){
             return;

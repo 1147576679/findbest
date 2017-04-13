@@ -1,5 +1,6 @@
 package com.example.zjy.bantang;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,6 +57,13 @@ public class IdsActivity extends BaseActivity implements RetrofitUtil.DownListen
     public void backClick(ImageView iv){
         finish();
         //退出动画
+    }
+
+    public static Intent newInstance(Context context,String extend,String title){
+        Intent intent = new Intent(context,IdsActivity.class);
+        intent.putExtra("extend",extend);
+        intent.putExtra("title",title);
+        return intent;
     }
 
     @Override

@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.zjy.fragment.message.CommentFragment;
 import com.example.zjy.fragment.message.NotificationFragment;
+import com.example.zjy.fragment.message.PushFragment;
 
 import static com.example.zjy.util.Constants.MESSAGETAB;
 
@@ -19,7 +21,15 @@ public class MessageVpAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return NotificationFragment.newInstance();
+        switch (position){
+            case 0:
+               return new NotificationFragment();
+            case 1:
+                return new CommentFragment();
+            case 2:
+            return new PushFragment();
+        }
+        return null;
     }
 
     @Override

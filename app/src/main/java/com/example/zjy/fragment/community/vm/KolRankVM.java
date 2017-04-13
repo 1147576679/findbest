@@ -2,8 +2,8 @@ package com.example.zjy.fragment.community.vm;
 
 import com.example.zjy.fragment.community.api.ServiceAccessor;
 import com.example.zjy.fragment.community.bean.CallBack;
-import com.example.zjy.fragment.community.bean.PostRankVo;
-import com.example.zjy.fragment.community.bean.dto.PostRankDto;
+import com.example.zjy.fragment.community.bean.KolRankVo;
+import com.example.zjy.fragment.community.bean.dto.KolRankDto;
 import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.util.Constants;
 import com.google.gson.Gson;
@@ -22,38 +22,38 @@ import rx.schedulers.Schedulers;
  * Created by zjy on 2017/4/5.
  */
 
-public class PostRankVM {
-    public static void getData(final CallBack<List<PostRankVo>> callBack) {
+public class KolRankVM {
+    public static void getData(final CallBack<List<KolRankVo>> callBack) {
         // TODO: 2017/4/10  备选方案
-//        String cache = DiskLruCacheUtil.getJsonCache(Constants.URL_POST_RANK);
+//        String cache = DiskLruCacheUtil.getJsonCache(Constants.URL_KOL_RANK);
         ServiceAccessor.getService()
-                .getModel(Constants.URL_POST_RANK)
+                .getModel(Constants.URL_KOL_RANK)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, PostRankDto>() {
+                .map(new Func1<String, KolRankDto>() {
                     @Override
-                    public PostRankDto call(String s) {
-                        DiskLruCacheUtil.removeCache(Constants.URL_POST_RANK);
-                        DiskLruCacheUtil.putJsonCache(Constants.URL_POST_RANK,s);
+                    public KolRankDto call(String s) {
+                        DiskLruCacheUtil.removeCache(Constants.URL_KOL_RANK);
+                        DiskLruCacheUtil.putJsonCache(Constants.URL_KOL_RANK,s);
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(s).getJSONObject("data");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return new Gson().fromJson(jsonObject.toString(), PostRankDto.class);
+                        return new Gson().fromJson(jsonObject.toString(), KolRankDto.class);
                     }
                 })
-                .map(new Func1<PostRankDto, List<PostRankVo>>() {
+                .map(new Func1<KolRankDto, List<KolRankVo>>() {
                     @Override
-                    public List<PostRankVo> call(PostRankDto postRankDto) {
-                        return postRankDto.transform();
+                    public List<KolRankVo> call(KolRankDto kolRankDto) {
+                        return kolRankDto.transform();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<PostRankVo>>() {
+                .subscribe(new Action1<List<KolRankVo>>() {
                     @Override
-                    public void call(List<PostRankVo> postRankVos) {
-                        callBack.callBack(postRankVos);
+                    public void call(List<KolRankVo> kolRankVos) {
+                        callBack.callBack(kolRankVos);
                     }
                 });
     }

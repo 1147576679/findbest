@@ -45,9 +45,10 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="16dp"
                 android:textSize="14sp"
-                tools:text="dahdkfhsdkfhdfkafdkfkk" />
+                tools:text="dahdkfhsdkfhdfkafdkfkk"
+                android:textColor="@color/post_rank_detail_text"/>
 
             <CheckBox
                 android:id="@+id/checkbox_praise"

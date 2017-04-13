@@ -11,6 +11,7 @@ import com.example.zjy.adapter.RVItemDetailAdapter;
 import com.example.zjy.bean.ItemDetailBean;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -38,6 +39,7 @@ public class SearchKeywordTopicResultActivity extends BaseActivity implements Re
     //底部评论
     private FooterView footerView;
     private HeaderAndFooterWrapper headerAndFooterWrapper;
+    private String mUrl;
 
     @Override
     public int getContentId() {
@@ -67,8 +69,10 @@ public class SearchKeywordTopicResultActivity extends BaseActivity implements Re
 
     @Override
     protected void loadDatas() {
-        String format = String.format(Constants.URL_ITEM_DETAIL, id);
-        new RetrofitUtil(this).setDownListener(this).downJson(format,0x001);
+        mUrl = String.format(Constants.URL_ITEM_DETAIL, id);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(mUrl);
+        new RetrofitUtil(this).setDownListener(this).downJson(mUrl,0x001);
     }
 
     //返回，分享，收藏imageview的点击事件
@@ -88,6 +92,7 @@ public class SearchKeywordTopicResultActivity extends BaseActivity implements Re
     //Retrofit 下载json 转化为Gson的是三个监听回调方法
     @Override
     public Object paresJson(String json, int requestCode) {
+        DiskLruCacheUtil.putJsonCache(mUrl,json);
         return ParseJsonUtils.parseItemDetail(json);
     }
 

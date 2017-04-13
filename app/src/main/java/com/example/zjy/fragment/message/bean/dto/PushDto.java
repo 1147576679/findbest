@@ -31,6 +31,8 @@ public class PushDto implements Transform<List<PushVo>>{
             pushVo.extend = listBean.getExtend();
             pushVo.ivUrl = listBean.getPic();
             pushVo.dataStr = listBean.getDatestr();
+            pushVo.title = listBean.getTitle();
+            pushVo.type = listBean.getType();
             pushVoList.add(pushVo);
         }
         return pushVoList;

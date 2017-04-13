@@ -15,6 +15,7 @@ import com.example.zjy.bean.SearchTopicBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.divider.DividerItemDecoration;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -57,6 +58,8 @@ public class SearchKeywordTopicFragment extends BaseFragment implements Retrofit
 //        Toast.makeText(getContext(), "SearchKeywordTopicFragment收到"+keyword, Toast.LENGTH_SHORT).show();
         Log.i("tag", "SearchKeywordTopicFragment收到: "+keyword);
         url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,topic,keyword);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         loadDatas();
     }
 
@@ -98,7 +101,7 @@ public class SearchKeywordTopicFragment extends BaseFragment implements Retrofit
 
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.putJsonCache(url,json);
         //解析关键字 文章搜索json
         return ParseJsonUtils.parseSearchTopic(json);
     }

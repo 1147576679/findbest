@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.WebviewBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -32,6 +33,8 @@ public class HomeItemDetailFragment extends BaseFragment implements RetrofitUtil
     @Bind(R.id.load_anim)
     ImageView imageView;
     private AnimationDrawable animationDrawable;
+    private String mUrl;
+
     @Override
     public int getContentId() {
         return R.layout.fragment_home_item_detail;
@@ -71,19 +74,20 @@ public class HomeItemDetailFragment extends BaseFragment implements RetrofitUtil
     @Override
     protected void getDatas(Bundle bundle) {
         mId = bundle.getString("id");
-//        Log.i("tag", "getDatas: "+mId);
         loadDatas();
     }
 
     @Override
     protected void loadDatas() {
-        String url = String.format(Constants.URL_ITEM_DETAIL,mId);
-//        Log.i("tag", "loadDatas: "+url);
-        new RetrofitUtil(getContext()).setDownListener(this).downJson(url,0x001);
+        mUrl = String.format(Constants.URL_ITEM_DETAIL,mId);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(mUrl);
+        new RetrofitUtil(getContext()).setDownListener(this).downJson(mUrl,0x001);
     }
 
     @Override
     public Object paresJson(String json, int requestCode) {
+        DiskLruCacheUtil.putJsonCache(mUrl,json);
         return ParseJsonUtils.parseWebViewUrl(json);
     }
 

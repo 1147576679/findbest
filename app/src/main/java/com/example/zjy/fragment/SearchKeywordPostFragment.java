@@ -13,6 +13,7 @@ import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -53,8 +54,9 @@ public class SearchKeywordPostFragment extends BaseFragment implements RetrofitU
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getKeyword(String keyword){
         Log.i("tag", "SearchKeywordPostFragment收到: "+keyword);
-//        Toast.makeText(getContext(), "SearchKeywordPostFragment收到"+keyword, Toast.LENGTH_SHORT).show();
         url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,post,keyword);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         loadDatas();
     }
     //加载关键字数据
@@ -88,7 +90,7 @@ public class SearchKeywordPostFragment extends BaseFragment implements RetrofitU
 
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseSearchPost(json);
     }
 

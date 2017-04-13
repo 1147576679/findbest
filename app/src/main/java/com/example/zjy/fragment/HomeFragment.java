@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +14,10 @@ import com.example.zjy.bantang.IdsActivity;
 import com.example.zjy.bantang.R;
 import com.example.zjy.bantang.SearchActivity;
 import com.example.zjy.bean.HeadAndTabBean;
+import com.example.zjy.controller.HeadController;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.util.ConvenientBannerUtils;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -50,6 +51,9 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //缓存广告栏图片的集合
     private List<String> mList;
 
+    private HeadController mHeadController;
+
+
     public static Intent newInstance(Context context){
         return new Intent(context,SearchActivity.class);
     }
@@ -65,27 +69,51 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //初始化
     @Override
     protected void init(View view) {
+        mHeadController = new HeadController();
+//        mHeadController.head(Constants.URL_HEAD_TAB, new RxCallBack<HeadAndTabBean>() {
+//            @Override
+//            public void onNext(HeadAndTabBean headAndTabBean) {
+//                Log.i("tag", "onNext: "+headAndTabBean);
+//            }
+//
+//            @Override
+//            public void onTerminate() {
+//            }
+//
+//        });
+        String jsonCache = DiskLruCacheUtil.getJsonCache(Constants.URL_HEAD_TAB);
+        //Todo 备选方案
+//        if(jsonCache == null){
+//            loadDatas();
+//            Log.i("tag", "网络下载数据");
+//        }else {
+//            HeadAndTabBean headAndTabBean = ParseJsonUtils.parse(jsonCache);
+//            initViews(headAndTabBean);
+//            Log.i("tag", "从缓存中读取数据 ");
+//        }
         loadDatas();
     }
     //加载数据
     @Override
     protected void loadDatas() {
-
         new RetrofitUtil(getContext()).setDownListener(this).downJson(Constants.URL_HEAD_TAB,0x001);
     }
     //解析json
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB,json);
+        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB,json);
         return ParseJsonUtils.parse(json);
     }
     //解析完成
     @Override
     public void downSucc(Object object, int requestCode) {
 //        ll_err.setVisibility(View.GONE);
+        initViews((HeadAndTabBean) object);
+    }
+
+    private void initViews(HeadAndTabBean object) {
         EventBus.getDefault().post(0x001);
-        HeadAndTabBean headAndTabBean = (HeadAndTabBean) object;
-        Log.i("tag", "downSucc: "+headAndTabBean);
+        HeadAndTabBean headAndTabBean = object;
         final List<HeadAndTabBean.DataBean.BannerBean> banner = headAndTabBean.getData().getBanner();
         mList = new ArrayList<>();
         for (int i = 0; i < banner.size(); i++) {
@@ -141,8 +169,12 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //点击文本搜索框跳转到搜索Activity
     @OnClick(R.id.tv_search)
     public void click(TextView textView){
-//        Intent intent = new Intent(getActivity(), SearchActivity.class);
-//        getContext().startActivity(intent);
         getActivity().startActivity(newInstance(getActivity()));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        mHeadController.detachView();
     }
 }

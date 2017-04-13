@@ -9,6 +9,7 @@ import com.example.zjy.adapter.SearchArticleRVAdapter;
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.SearchArticleBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.ParseJsonUtils;
 
@@ -50,6 +51,8 @@ public class SearchArticleFragment extends BaseFragment implements RetrofitUtil.
     @Override
     protected void getDatas(Bundle bundle) {
         url = bundle.getString("url");
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         loadDatas();
     }
 
@@ -60,7 +63,7 @@ public class SearchArticleFragment extends BaseFragment implements RetrofitUtil.
 
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseSearchArticle(json);
     }
 

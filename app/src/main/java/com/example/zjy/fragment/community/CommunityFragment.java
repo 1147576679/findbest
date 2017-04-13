@@ -64,7 +64,6 @@ public class CommunityFragment extends Fragment implements View.OnClickListener 
         initView();
     }
 
-
     private void initView() {
         final AnimationDrawable animationDrawable = (AnimationDrawable) frameAnim.getDrawable();
         animationDrawable.start();

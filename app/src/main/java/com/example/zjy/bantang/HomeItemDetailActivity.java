@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.zjy.adapter.HomeItemDetailAdapter;
 import com.example.zjy.bean.HomeContentBean;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -48,6 +49,7 @@ public class HomeItemDetailActivity extends BaseActivity implements RetrofitUtil
 
     //拼接字符串
     private String extend;
+    private String mUrl;
 
 
     @Override
@@ -59,21 +61,15 @@ public class HomeItemDetailActivity extends BaseActivity implements RetrofitUtil
     protected void init() {
 
         Intent intent = getIntent();
-//        mId = intent.getStringExtra("id");
-//        mPosition = intent.getIntExtra("position",-1);
         Bundle bundle = intent.getExtras();
         mDatas = (List<HomeContentBean>) bundle.getSerializable("datas");
-//        Log.i("tag", "init: "+mDatas);
         mId = bundle.getString("id");
         mPosition = bundle.getInt("position");
         vpindex = bundle.getInt("vpindex");
-        Log.i("tag", "init: "+vpindex);
         page = bundle.getInt("page");
         extend = bundle.getString("extend");
-        Log.i("tag", "init: "+mId);
         homeItemDetailAdapter = new HomeItemDetailAdapter(getSupportFragmentManager(),mDatas);
         vp_home_item_detail.setAdapter(homeItemDetailAdapter);
-        Log.i("tag", "init: "+mDatas.size());
     }
 
 
@@ -93,17 +89,18 @@ public class HomeItemDetailActivity extends BaseActivity implements RetrofitUtil
                     if (position == mDatas.size() - 2) {
                         page++;
                         Log.i("tag", "onPageSelected: 调用了"+page);
-                        String url;
                         switch (vpindex){
                             case 0:
                             case 1:
-                                url = String.format(Constants.URL_JINXUAN_YUANCHUANG,page);
+                                mUrl = String.format(Constants.URL_JINXUAN_YUANCHUANG,page);
                                 break;
                             default:
-                                url = String.format(Constants.URL_OTHER,page,extend);
+                                mUrl = String.format(Constants.URL_OTHER,page,extend);
                                 break;
                         }
-                        new RetrofitUtil(HomeItemDetailActivity.this).setDownListener(HomeItemDetailActivity.this).downJson(url, 0x001);
+                        // TODO: 2017/4/10 备选方案
+//                        String jsonCache = DiskLruCacheUtil.getJsonCache(mUrl);
+                        new RetrofitUtil(HomeItemDetailActivity.this).setDownListener(HomeItemDetailActivity.this).downJson(mUrl, 0x001);
                     }
                 }
             }
@@ -123,6 +120,7 @@ public class HomeItemDetailActivity extends BaseActivity implements RetrofitUtil
 
     @Override
     public Object paresJson(String json, int requestCode) {
+        DiskLruCacheUtil.putJsonCache(mUrl,json);
         return ParseJsonUtils.parseContent(json);
     }
 

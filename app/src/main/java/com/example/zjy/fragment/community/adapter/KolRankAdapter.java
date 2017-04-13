@@ -1,7 +1,6 @@
 package com.example.zjy.fragment.community.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -62,7 +61,6 @@ public class KolRankAdapter extends CommonAdapter<KolRankVo> {
         customGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("tag", "onItemClick: "+position+"===="+ id);
                 Integer integer = kolRankVo.flag.get(position);
                 if(integer == TOPIC ){
                     mContext.startActivity(CommunityTopicDetailActivity.newInstance(mContext,kolRankVo.id.get(position)+""));

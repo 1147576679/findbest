@@ -10,4 +10,5 @@ public class PushVo {
     public String title;
     public String extend;
     public String dataStr;
+    public String type;
 }

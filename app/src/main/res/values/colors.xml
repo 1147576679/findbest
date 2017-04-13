@@ -37,4 +37,6 @@
     <color name="rank_tv_color">#FF9507</color>
 
     <color name="message_push_item_date">#F4F4F4</color>
+
+    <color name="post_rank_detail_text">#909090</color>
 </resources>

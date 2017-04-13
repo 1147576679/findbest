@@ -3,6 +3,7 @@ package com.example.zjy.fragment.community.vm;
 import com.example.zjy.fragment.community.api.ServiceAccessor;
 import com.example.zjy.fragment.community.bean.CommunityVo;
 import com.example.zjy.fragment.community.bean.dto.CommunityBean;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
 
@@ -36,12 +37,16 @@ public class CommunityVM {
 
     public void getDataFromServer(final CallBack callback) {
         url = String.format(Constants.URL_COMMUNITY, page);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         ServiceAccessor.getService()
                 .getModel(url)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, CommunityBean>() {
                     @Override
                     public CommunityBean call(String s) {
+                        DiskLruCacheUtil.removeCache(url);
+                        DiskLruCacheUtil.putJsonCache(url,s);
                         return ParseJsonUtils.parseCommunity(s);
                     }
                 })
@@ -60,6 +65,7 @@ public class CommunityVM {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        page--;
                        throwable.printStackTrace();
                     }
                 });

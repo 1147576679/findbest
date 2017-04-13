@@ -1,9 +1,9 @@
-package com.example.zjy.fragment.community.vm;
+package com.example.zjy.fragment.message.vm;
 
 import com.example.zjy.fragment.community.api.ServiceAccessor;
 import com.example.zjy.fragment.community.bean.CallBack;
-import com.example.zjy.fragment.community.bean.TopicRankVo;
-import com.example.zjy.fragment.community.bean.dto.TopicRankDto;
+import com.example.zjy.fragment.message.bean.PushVo;
+import com.example.zjy.fragment.message.bean.dto.PushDto;
 import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.util.Constants;
 import com.google.gson.Gson;
@@ -19,42 +19,46 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zjy on 2017/4/5.
+ * Created by zjy on 2017/4/6.
  */
 
-public class TopicRankVM {
-    public static void getData(final CallBack<List<TopicRankVo>> callBack) {
+public class PushVM {
+    public static void getData(final CallBack<List<PushVo>> callBack) {
         // TODO: 2017/4/10  备选方案
-//        String cache = DiskLruCacheUtil.getJsonCache(Constants.URL_TOPIC_RANK);
+//        String cache = DiskLruCacheUtil.getJsonCache(Constants.URL_MESSAGE_PUSH);
         ServiceAccessor.getService()
-                .getModel(Constants.URL_TOPIC_RANK)
+                .getModel(Constants.URL_MESSAGE_PUSH)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, TopicRankDto>() {
+                .map(new Func1<String, PushDto>() {
                     @Override
-                    public TopicRankDto call(String s) {
-                        DiskLruCacheUtil.removeCache(Constants.URL_TOPIC_RANK);
-                        DiskLruCacheUtil.putJsonCache(Constants.URL_TOPIC_RANK,s);
+                    public PushDto call(String s) {
+                        DiskLruCacheUtil.removeCache(Constants.URL_MESSAGE_PUSH);
+                        DiskLruCacheUtil.putJsonCache(Constants.URL_MESSAGE_PUSH,s);
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(s).getJSONObject("data");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return new Gson().fromJson(jsonObject.toString(), TopicRankDto.class);
+                        return new Gson().fromJson(jsonObject.toString(), PushDto.class);
                     }
                 })
-                .map(new Func1<TopicRankDto, List<TopicRankVo>>() {
+                .map(new Func1<PushDto, List<PushVo>>() {
                     @Override
-                    public List<TopicRankVo> call(TopicRankDto topicRankDto) {
-                        return topicRankDto.transform();
+                    public List<PushVo> call(PushDto pushDto) {
+                        return pushDto.transform();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<TopicRankVo>>() {
+                .subscribe(new Action1<List<PushVo>>() {
                     @Override
-                    public void call(List<TopicRankVo> topicRankVo) {
+                    public void call(List<PushVo> topicRankVo) {
                         callBack.callBack(topicRankVo);
                     }
                 });
+    }
+
+    public static void refreshData(CallBack<List<PushVo>> callBack){
+        getData(callBack);
     }
 }

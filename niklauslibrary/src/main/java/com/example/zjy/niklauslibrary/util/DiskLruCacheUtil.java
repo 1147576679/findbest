@@ -46,7 +46,7 @@ public class DiskLruCacheUtil {
     }
 
     public static boolean putJsonCache(String url,String json){
-        if(url != null && json != null && getCache(url) == null){
+        if(url != null && json != null && getJsonCache(url) == null){
             String key = Md5Util.MD5(url);
             try {
                 DiskLruCache.Editor writeCache = diskLruCache.edit(key);
@@ -61,9 +61,9 @@ public class DiskLruCacheUtil {
     }
     //读取缓存
     public static String getJsonCache(String url){
-        if(url != null) {
-            StringBuffer stringBuffer = new StringBuffer();
+        if(url != null ) {
             String key = Md5Util.MD5(url);
+            StringBuffer stringBuffer = new StringBuffer();
             DiskLruCache.Snapshot snapshot;
             InputStream inputStream = null;
             BufferedReader in = null;
@@ -82,8 +82,12 @@ public class DiskLruCacheUtil {
                 e.printStackTrace();
             }finally {
                 try {
-                    in.close();
-                    inputStream.close();
+                    if(in != null){
+                        in.close();
+                    }
+                    if(inputStream != null){
+                        inputStream.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -126,7 +130,7 @@ public class DiskLruCacheUtil {
         return null;
     }
     //移除缓存
-    public void removeCache(String url){
+    public static void removeCache(String url){
         try {
             String key = Md5Util.MD5(url);
             diskLruCache.remove(key);

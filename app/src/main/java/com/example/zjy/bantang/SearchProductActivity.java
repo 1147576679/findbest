@@ -18,6 +18,7 @@ import com.example.zjy.adapter.SearchProductRVAdapter;
 import com.example.zjy.bean.SearchProductBean;
 import com.example.zjy.bean.SearchSubClassBean;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -78,20 +79,26 @@ public class SearchProductActivity extends BaseActivity implements RetrofitUtil.
         subClassUrl = String.format(Constants.URL_SUBCLASSINFO,id);
         //产品的展示url
         productUrl = String.format(Constants.URL_SEARCH_PRODUCT,id);
+
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(subClassUrl);
+//        String cache = DiskLruCacheUtil.getJsonCache(productUrl);
         new RetrofitUtil(this).setDownListener(this).downJson(subClassUrl,0x001);
         new RetrofitUtil(this).setDownListener(this).downJson(productUrl,0x002);
     }
 
     @Override
     public Object paresJson(String json, int requestCode) {
-//        DiskLruCacheUtil.putJsonCache(subClassUrl,json);
-//        DiskLruCacheUtil.putJsonCache(productUrl,json);
+
         switch (requestCode){
             case 0x001:
+                DiskLruCacheUtil.putJsonCache(subClassUrl,json);
                 return ParseJsonUtils.parseSearchSubClass(json);
             case 0x002:
+                DiskLruCacheUtil.putJsonCache(productUrl,json);
                 return ParseJsonUtils.parseSearchProduct(json);
             case 0x003:
+                DiskLruCacheUtil.putJsonCache(productUrl,json);
                 return ParseJsonUtils.parseSearchProduct(json);
         }
         return null;
@@ -154,6 +161,8 @@ public class SearchProductActivity extends BaseActivity implements RetrofitUtil.
                             textView.setTag(tv_id);
                             id = class_list.get(tag).getId();
                             productUrl = String.format(Constants.URL_LISTSBYUBCLASS,id);
+                            // TODO: 2017/4/10 备选方案
+//                            String cache = DiskLruCacheUtil.getJsonCache(productUrl);
                             new RetrofitUtil(SearchProductActivity.this).setDownListener(SearchProductActivity.this).downJson(productUrl,0x003);
                         }
                     });

@@ -15,6 +15,7 @@ import com.example.zjy.bean.ItemDetailBean;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
@@ -118,7 +119,6 @@ public class HomeSecondDetailFragment extends BaseFragment implements RetrofitUt
     @Override
     protected void loadDatas() {
         url = String.format(Constants.URL_ITEM_DETAIL,mId);
-        Log.i("tag", "loadDatas: "+ url);
         new RetrofitUtil(getContext()).setDownListener(this).downJson(url,0x001);
     }
 
@@ -130,8 +130,7 @@ public class HomeSecondDetailFragment extends BaseFragment implements RetrofitUt
      */
     @Override
     public Object paresJson(String json, int requestCode) {
-//        Log.i("tag", "paresJson: "+json);
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseItemDetail(json);
     }
 
@@ -143,12 +142,9 @@ public class HomeSecondDetailFragment extends BaseFragment implements RetrofitUt
     @Override
     public void downSucc(Object object, int requestCode) {
         ItemDetailBean itemDetailBean = (ItemDetailBean) object;
-//        Log.i("tag", "downSucc: "+itemDetailBean.getData().getPost_list());
         mRVItemDetailAdapter.addData(itemDetailBean);
         animationDrawable.stop();
         iv_frame_anim.setVisibility(View.GONE);
-
-//        webView.loadData(itemDetailBean.getData().getArticle_content(),"text/html; charset=UTF-8",null);
     }
 
     /**

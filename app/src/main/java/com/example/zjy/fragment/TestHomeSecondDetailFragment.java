@@ -28,10 +28,12 @@ import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
+import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
 import com.example.zjy.niklauslibrary.util.RetrofitUtil;
 import com.example.zjy.niklauslibrary.util.ToastUtils;
 import com.example.zjy.util.Constants;
 import com.example.zjy.util.ParseJsonUtils;
+import com.example.zjy.util.ShareSdkUtils;
 import com.example.zjy.widget.FootViewTypeProduct;
 import com.example.zjy.widget.FooterView;
 import com.example.zjy.widget.HeadViewHomeItemDetail;
@@ -73,6 +75,7 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
     private FooterView footerView;
     private HeaderAndFooterWrapper headerAndFooterWrapper;
     private String url;
+    private ItemDetailBean mItemDetailBean;
 
     @Override
     public int getContentId() {
@@ -94,8 +97,11 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
                 getActivity().finish();
                 break;
             case R.id.iv_like:
+                iv_like.setImageResource(R.drawable.ic_title_bar_like_yellow);
+                ToastUtils.showToast(getContext(),"收藏成功");
                 break;
             case R.id.iv_share:
+                ShareSdkUtils.showShare(getContext(),mItemDetailBean.getData().getTitle(),mItemDetailBean.getData().getShare_url(),mItemDetailBean.getData().getTitle());
                 break;
         }
     }
@@ -105,15 +111,6 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
         //开场的帧动画
         animationDrawable = (AnimationDrawable) iv_frame_anim.getDrawable();
         animationDrawable.start();
-//        mRVItemDetailAdapter = new RVItemDetailAdapter(getContext());
-//        mRVItemDetailAdapter.setFragmentManager(getChildFragmentManager());
-////        rv_item_detail.setAdapter(mRVItemDetailAdapter);
-//        rv_item_detail.setLayoutManager(new LinearLayoutManager(
-//                getContext(),
-//                LinearLayoutManager.VERTICAL,
-//                false
-//        ));
-//        initFootView();
     }
 
 
@@ -129,9 +126,8 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
     @Override
     protected void loadDatas() {
         url = String.format(Constants.URL_ITEM_DETAIL,mId);
-        //从磁盘缓存中得到json字符串
-//        String jsonCache = DiskLruCacheUtil.getJsonCache(url);
-        Log.i("tag", "loadDatas: "+ url);
+        // TODO: 2017/4/10  备选方案
+//        String cache = DiskLruCacheUtil.getJsonCache(url);
         new RetrofitUtil(getContext()).setDownListener(this).downJson(url,0x001);
     }
 
@@ -143,8 +139,7 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
      */
     @Override
     public Object paresJson(String json, int requestCode) {
-//        Log.i("tag", "paresJson: "+json);
-//        DiskLruCacheUtil.putJsonCache(url,json);
+        DiskLruCacheUtil.putJsonCache(url,json);
         return ParseJsonUtils.parseItemDetail(json);
     }
 
@@ -155,20 +150,20 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
      */
     @Override
     public void downSucc(Object object, int requestCode) {
-        ItemDetailBean itemDetailBean = (ItemDetailBean) object;
-        if(itemDetailBean.getData().getProduct_list() != null){
+        mItemDetailBean = (ItemDetailBean) object;
+        if(mItemDetailBean.getData().getProduct_list() != null){
             //product_list 不为空，使用该布局适配器
             commonAdapter = new RVProductAdapter(getContext());
-            initInnerHeadFoot(itemDetailBean);
-            commonAdapter.addDataAll(itemDetailBean.getData().getProduct_list());
-        }else if(itemDetailBean.getData().getPost_list() != null){
+            initInnerHeadFoot(mItemDetailBean);
+            commonAdapter.addDataAll(mItemDetailBean.getData().getProduct_list());
+        }else if(mItemDetailBean.getData().getPost_list() != null){
             //post_list使用此布局适配器
             commonAdapter = new RVPostListAdapter(getContext());
             RVPostListAdapter rvPostListAdapter = (RVPostListAdapter) commonAdapter;
             rvPostListAdapter.setFragmentManager(getChildFragmentManager());
-            initInnerHeadFoot(itemDetailBean);
-            commonAdapter.addDataAll(itemDetailBean.getData().getPost_list());
-        }else if(itemDetailBean.getData().getContent_list() != null){
+            initInnerHeadFoot(mItemDetailBean);
+            commonAdapter.addDataAll(mItemDetailBean.getData().getPost_list());
+        }else if(mItemDetailBean.getData().getContent_list() != null){
             //content_list 不为空时使用此布局适配器
             commonAdapter = new RVContentAdapter(getContext(), new RVContentAdapter.ClickImageListener() {
                 @Override
@@ -180,9 +175,9 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
                     getActivity().overridePendingTransition(0,0);
                 }
             });
-            initContent_listFootView(itemDetailBean);
-            commonAdapter.addDataAll(itemDetailBean.getData().getContent_list());
-        }else if(itemDetailBean.getData().getArticle_content() != null){
+            initContent_listFootView(mItemDetailBean);
+            commonAdapter.addDataAll(mItemDetailBean.getData().getContent_list());
+        }else if(mItemDetailBean.getData().getArticle_content() != null){
             //HTml文本 用webView展示页面
             commonAdapter = new CommonAdapter<ItemDetailBean>(getContext(),R.layout.item_detail_rv_webview) {
                 @Override
@@ -192,7 +187,7 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
                 }
             };
             initFootView();
-            commonAdapter.addData(itemDetailBean);
+            commonAdapter.addData(mItemDetailBean);
         }
         rv_item_detail.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
