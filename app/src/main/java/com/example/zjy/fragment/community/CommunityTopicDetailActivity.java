@@ -28,6 +28,7 @@ import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.rvhelper.wrapper.HeaderAndFooterWrapper;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
 import com.example.zjy.niklauslibrary.util.ToastUtils;
+import com.example.zjy.util.ShareSdkUtils;
 import com.example.zjy.widget.FootViewTypeProduct;
 import com.example.zjy.widget.FooterView;
 import com.example.zjy.widget.HeadViewHomeItemDetail;
@@ -43,6 +44,8 @@ public class CommunityTopicDetailActivity extends BaseActivity {
 
     @Bind(R.id.iv_back_arrow)
     ImageView mIvBackArrow;
+    @Bind(R.id.iv_like)
+    ImageView mIvLike;
 
     private CommunityTopicVM mCommunityTopicVM;
 
@@ -50,6 +53,7 @@ public class CommunityTopicDetailActivity extends BaseActivity {
     private FooterView mFooterView;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private String mId;
+    private ItemDetailBean mItemDetailBean;
 
     @Override
     public int getContentId() {
@@ -62,9 +66,23 @@ public class CommunityTopicDetailActivity extends BaseActivity {
         return intent;
     }
 
-    @OnClick(R.id.iv_back_arrow)
+    @OnClick({R.id.iv_back_arrow,R.id.iv_share, R.id.iv_like})
     public void ivClick(View view){
-        finish();
+        switch(view.getId()){
+            case R.id.iv_back_arrow:
+                finish();
+                break;
+            case R.id.iv_like:
+                mIvLike.setImageResource(R.drawable.ic_title_bar_like_yellow);
+                ToastUtils.showToast(this,"收藏成功");
+                break;
+            case R.id.iv_share:
+                ShareSdkUtils.showShare(this,
+                        mItemDetailBean.getData().getTitle(),
+                        mItemDetailBean.getData().getShare_url(),
+                        mItemDetailBean.getData().getTitle());
+                break;
+        }
     }
 
     @Override
@@ -78,33 +96,35 @@ public class CommunityTopicDetailActivity extends BaseActivity {
             @Override
             public void callBack(ItemDetailBean data) {
 //                mRVItemDetailAdapter.addData(data);
-                ItemDetailBean itemDetailBean = data;
-                if(itemDetailBean.getData().getProduct_list() != null){
+                mItemDetailBean = data;
+                if(mItemDetailBean.getData().getProduct_list() != null){
                     //product_list 不为空，使用该布局适配器
                     mCommonAdapter = new RVProductAdapter(CommunityTopicDetailActivity.this);
-                    initInnerHeadFoot(itemDetailBean);
-                    mCommonAdapter.addDataAll(itemDetailBean.getData().getProduct_list());
-                }else if(itemDetailBean.getData().getPost_list() != null){
+                    initInnerHeadFoot(mItemDetailBean);
+                    mCommonAdapter.addDataAll(mItemDetailBean.getData().getProduct_list());
+                }else if(mItemDetailBean.getData().getPost_list() != null){
                     //post_list使用此布局适配器
                     mCommonAdapter = new RVPostListAdapter(CommunityTopicDetailActivity.this);
                     RVPostListAdapter rvPostListAdapter = (RVPostListAdapter) mCommonAdapter;
                     rvPostListAdapter.setFragmentManager(getSupportFragmentManager());
-                    initInnerHeadFoot(itemDetailBean);
-                    mCommonAdapter.addDataAll(itemDetailBean.getData().getPost_list());
-                }else if(itemDetailBean.getData().getContent_list() != null){
+                    initInnerHeadFoot(mItemDetailBean);
+                    mCommonAdapter.addDataAll(mItemDetailBean.getData().getPost_list());
+                }else if(mItemDetailBean.getData().getContent_list() != null){
                     //content_list 不为空时使用此布局适配器
                     mCommonAdapter = new RVContentAdapter(CommunityTopicDetailActivity.this, new RVContentAdapter.ClickImageListener() {
                         @Override
                         public void onClick(String url, int position) {
-                            Intent intent = new Intent(CommunityTopicDetailActivity.this, PhotoViewActivity.class);
-                            intent.putExtra("picUrl",url);
-                            Log.i("tag", "onClick:点击了图片 "+ position);
-                            CommunityTopicDetailActivity.this.startActivity(intent);
+//                            Intent intent = new Intent(CommunityTopicDetailActivity.this, PhotoViewActivity.class);
+//                            intent.putExtra("picUrl",url);
+//                            Log.i("tag", "onClick:点击了图片 "+ position);
+                            Log.i("tag", "onClick: "+url);
+                            CommunityTopicDetailActivity.this.startActivity(PhotoViewActivity.newInstance(CommunityTopicDetailActivity.this,url));
+                            CommunityTopicDetailActivity.this.overridePendingTransition(0,0);
                         }
                     });
-                    initContent_listFootView(itemDetailBean);
-                    mCommonAdapter.addDataAll(itemDetailBean.getData().getContent_list());
-                }else if(itemDetailBean.getData().getArticle_content() != null){
+                    initContent_listFootView(mItemDetailBean);
+                    mCommonAdapter.addDataAll(mItemDetailBean.getData().getContent_list());
+                }else if(mItemDetailBean.getData().getArticle_content() != null){
                     //HTml文本 用webView展示页面
                     mCommonAdapter = new CommonAdapter<ItemDetailBean>(CommunityTopicDetailActivity.this,R.layout.item_detail_rv_webview) {
                         @Override
@@ -114,7 +134,7 @@ public class CommunityTopicDetailActivity extends BaseActivity {
                         }
                     };
                     initFootView();
-                    mCommonAdapter.addData(itemDetailBean);
+                    mCommonAdapter.addData(mItemDetailBean);
                 }
                 mTopicRvDetail.setLayoutManager(new LinearLayoutManager(CommunityTopicDetailActivity.this,LinearLayoutManager.VERTICAL,false));
             }

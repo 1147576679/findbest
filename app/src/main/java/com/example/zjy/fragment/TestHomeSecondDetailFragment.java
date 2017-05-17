@@ -1,6 +1,5 @@
 package com.example.zjy.fragment;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -101,7 +100,15 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
                 ToastUtils.showToast(getContext(),"收藏成功");
                 break;
             case R.id.iv_share:
-                ShareSdkUtils.showShare(getContext(),mItemDetailBean.getData().getTitle(),mItemDetailBean.getData().getShare_url(),mItemDetailBean.getData().getTitle());
+                ShareSdkUtils.showShare(getContext(),
+                        mItemDetailBean.getData().getTitle(),
+                        mItemDetailBean.getData().getShare_url(),
+                        mItemDetailBean.getData().getDesc());
+//                ShareSdkUtils.shareMsg(getContext(),
+//                        "分享到",
+//                        mItemDetailBean.getData().getTitle(),
+//                        mItemDetailBean.getData().getDesc(),
+//                        "");
                 break;
         }
     }
@@ -168,10 +175,10 @@ public class TestHomeSecondDetailFragment extends BaseFragment implements Retrof
             commonAdapter = new RVContentAdapter(getContext(), new RVContentAdapter.ClickImageListener() {
                 @Override
                 public void onClick(String url, int position) {
-                    Intent intent = new Intent(getContext(), PhotoViewActivity.class);
-                    intent.putExtra("picUrl",url);
-                    Log.i("tag", "onClick:点击了图片 "+ position);
-                    getContext().startActivity(intent);
+//                    Intent intent = new Intent(getContext(), PhotoViewActivity.class);
+//                    intent.putExtra("picUrl",url);
+                    Log.i("tag", "onClick:点击了图片 "+ url);
+                    getContext().startActivity(PhotoViewActivity.newInstance(getContext(),url));
                     getActivity().overridePendingTransition(0,0);
                 }
             });

@@ -70,7 +70,7 @@ public class VPPostListItemFragment extends BaseFragment {
         }
         Glide.with(getContext())
                 .load(url)
-                .placeholder(R.drawable.bg_personal_wish_item_drawable_day)
+                .placeholder(R.drawable.place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv_vp_show);
     }

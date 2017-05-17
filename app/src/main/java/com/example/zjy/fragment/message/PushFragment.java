@@ -11,6 +11,7 @@ import com.example.zjy.fragment.message.bean.PushVo;
 import com.example.zjy.fragment.message.vm.PushVM;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.widget.PtrHeadView;
+import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class PushFragment extends BaseFragment {
     private PtrHeadView mPtrHeadView;
 
     private List<PushVo> data = new ArrayList<>();
+
+    private EmptyWrapper mEmptyWrapper;
 
     @Override
     public int getContentId() {
@@ -76,7 +79,9 @@ public class PushFragment extends BaseFragment {
             public void callBack(List<PushVo> pushVos) {
                 data = pushVos;
                 mPushRvAdapter = new PushRvAdapter(getContext(),R.layout.item_message_rv_push,data);
-                mRvPush.setAdapter(mPushRvAdapter);
+                mEmptyWrapper = new EmptyWrapper(mPushRvAdapter);
+                mEmptyWrapper.setEmptyView(R.layout.layout_empty_view);
+                mRvPush.setAdapter(mEmptyWrapper);
             }
         });
     }

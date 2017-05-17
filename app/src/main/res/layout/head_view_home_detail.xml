@@ -39,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Abc"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:textColor="@color/text_color"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="6dp"

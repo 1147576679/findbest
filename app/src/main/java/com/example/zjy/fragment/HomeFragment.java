@@ -41,7 +41,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     //主页标签栏  -- 精选 热门...
     @Bind(R.id.home_tab)
     TabLayout mHome_tab;
-//    @Bind(R.id.ll_err)
+    //    @Bind(R.id.ll_err)
 //    LinearLayout ll_err;
     //主页的显示列表
     @Bind(R.id.home_vp)
@@ -54,8 +54,8 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     private HeadController mHeadController;
 
 
-    public static Intent newInstance(Context context){
-        return new Intent(context,SearchActivity.class);
+    public static Intent newInstance(Context context) {
+        return new Intent(context, SearchActivity.class);
     }
 
 //    @Bind(R.id.tv_search)
@@ -66,6 +66,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
     public int getContentId() {
         return R.layout.fragment_home_copy;
     }
+
     //初始化
     @Override
     protected void init(View view) {
@@ -93,17 +94,20 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
 //        }
         loadDatas();
     }
+
     //加载数据
     @Override
     protected void loadDatas() {
-        new RetrofitUtil(getContext()).setDownListener(this).downJson(Constants.URL_HEAD_TAB,0x001);
+        new RetrofitUtil(getContext()).setDownListener(this).downJson(Constants.URL_HEAD_TAB, 0x001);
     }
+
     //解析json
     @Override
     public Object paresJson(String json, int requestCode) {
-        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB,json);
+        DiskLruCacheUtil.putJsonCache(Constants.URL_HEAD_TAB, json);
         return ParseJsonUtils.parse(json);
     }
+
     //解析完成
     @Override
     public void downSucc(Object object, int requestCode) {
@@ -120,6 +124,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
             String photo = banner.get(i).getPhoto();
             mList.add(photo);
         }
+//        mList.add("http://pic1.bantangapp.com/topic/201704/11/99551011_144023_1.jpg");
         //加载头部广告栏
         new ConvenientBannerUtils.Builder()
                 .mList(mList)
@@ -134,8 +139,8 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
 //                        Toast.makeText(getActivity(), "...."+position, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), IdsActivity.class);
                         String extend = banner.get(position).getExtend();
-                        intent.putExtra("extend",extend);
-                        intent.putExtra("title",banner.get(position).getTitle());
+                        intent.putExtra("extend", extend);
+                        intent.putExtra("title", banner.get(position).getTitle());
                         startActivity(intent);
                     }
                 })
@@ -144,7 +149,7 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
 
         //初始化标签栏
         List<HeadAndTabBean.DataBean.CategoryElementBean> category_element = headAndTabBean.getData().getCategory_element();
-        mHomeViewPagerAdapter = new HomeViewPagerAdapter(getFragmentManager(),category_element);
+        mHomeViewPagerAdapter = new HomeViewPagerAdapter(getFragmentManager(), category_element);
         mHome_vp.setAdapter(mHomeViewPagerAdapter);
         mHome_tab.setupWithViewPager(mHome_vp);
     }
@@ -166,9 +171,10 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
 //        });
 
     }
+
     //点击文本搜索框跳转到搜索Activity
     @OnClick(R.id.tv_search)
-    public void click(TextView textView){
+    public void click(TextView textView) {
         getActivity().startActivity(newInstance(getActivity()));
     }
 
@@ -178,3 +184,4 @@ public class HomeFragment extends BaseFragment implements RetrofitUtil.DownListe
 //        mHeadController.detachView();
     }
 }
+

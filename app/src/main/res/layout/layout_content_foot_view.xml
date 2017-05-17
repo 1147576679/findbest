@@ -39,4 +39,8 @@
         android:layout_height="1dp"
         android:background="@color/divider"/>
     <include layout="@layout/layout_creater"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
 </LinearLayout>

@@ -8,7 +8,8 @@
     <!--首页RecyclerView item 详情多布局之post_list 的RecyclerView的item的布局-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_centerVertical="true"
             android:id="@+id/user_icon"
@@ -52,13 +53,15 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="abc"/>
+        tools:text="abc"
+        android:textColor="@color/text_color"/>
     <LinearLayout
         android:id="@+id/ll_brand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <RelativeLayout
+            android:id="@+id/rl_buy"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
@@ -137,6 +140,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@color/white_color"/>
+        android:layout_height="0.7dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/divider"/>
 </LinearLayout>

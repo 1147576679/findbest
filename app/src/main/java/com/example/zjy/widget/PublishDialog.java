@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,6 +12,8 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.example.zjy.bantang.ArticleActivity;
+import com.example.zjy.bantang.PostActivity;
 import com.example.zjy.bantang.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,9 +24,10 @@ import org.greenrobot.eventbus.Subscribe;
  */
 
 public class PublishDialog extends Dialog implements View.OnClickListener {
-    private android.widget.ImageView ivarticle;
-    private android.widget.ImageView ivpost;
-    private android.widget.ImageView ivpublish;
+    private static final int ALBUM_REQUEST_CODE = 1;
+    private ImageView ivarticle;
+    private ImageView ivpost;
+    private ImageView ivpublish;
 
 
     public PublishDialog(Context context) {
@@ -40,6 +44,8 @@ public class PublishDialog extends Dialog implements View.OnClickListener {
         this.ivpost = (ImageView) findViewById(R.id.iv_post);
         this.ivarticle = (ImageView) findViewById(R.id.iv_article);
         ivpublish.setOnClickListener(this);
+        ivarticle.setOnClickListener(this);
+        ivpost.setOnClickListener(this);
         //旋转动画
         rotateAnimation(ivpublish);
 //        ivpost.animate()
@@ -95,6 +101,15 @@ public class PublishDialog extends Dialog implements View.OnClickListener {
                         .translationY(100)
                         .setDuration(500)
                         .start();
+
+                break;
+            case R.id.iv_post:
+                getContext().startActivity(new Intent(getContext(), PostActivity.class));
+                this.dismiss();
+                break;
+            case R.id.iv_article:
+                getContext().startActivity(new Intent(getContext(), ArticleActivity.class));
+                this.dismiss();
                 break;
         }
 //        this.dismiss();

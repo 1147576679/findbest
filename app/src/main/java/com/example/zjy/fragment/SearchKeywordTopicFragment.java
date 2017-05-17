@@ -1,6 +1,5 @@
 package com.example.zjy.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,9 @@ import android.view.View;
 
 import com.example.zjy.adapter.SearchKeywordTopicRVAdapter;
 import com.example.zjy.bantang.R;
-import com.example.zjy.bantang.SearchKeywordTopicResultActivity;
 import com.example.zjy.bean.SearchTopicBean;
+import com.example.zjy.bean.event.KeywordEvent;
+import com.example.zjy.fragment.community.CommunityTopicDetailActivity;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.divider.DividerItemDecoration;
@@ -53,13 +53,21 @@ public class SearchKeywordTopicFragment extends BaseFragment implements Retrofit
     }
 
     //通过粘性eventBus接收搜索界面发过的用户输入的关键字
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void getKeyword(String keyword){
+////        Toast.makeText(getContext(), "SearchKeywordTopicFragment收到"+keyword, Toast.LENGTH_SHORT).show();
+//        Log.i("tag", "SearchKeywordTopicFragment收到: "+keyword);
+//        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,topic,keyword);
+//        // TODO: 2017/4/10  备选方案
+////        String cache = DiskLruCacheUtil.getJsonCache(url);
+//        loadDatas();
+//    }
+
+    //通过粘性eventBus接收搜索界面发过的用户输入的关键字
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyword(String keyword){
-//        Toast.makeText(getContext(), "SearchKeywordTopicFragment收到"+keyword, Toast.LENGTH_SHORT).show();
-        Log.i("tag", "SearchKeywordTopicFragment收到: "+keyword);
-        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,topic,keyword);
-        // TODO: 2017/4/10  备选方案
-//        String cache = DiskLruCacheUtil.getJsonCache(url);
+    public void getKeyword(KeywordEvent keywordEvent){
+        Log.i("tag", "SearchKeywordSingleFragment收到: "+keywordEvent.keyword);
+        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,topic,keywordEvent.keyword);
         loadDatas();
     }
 
@@ -86,10 +94,10 @@ public class SearchKeywordTopicFragment extends BaseFragment implements Retrofit
         searchKeywordTopicRVAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener<SearchTopicBean>() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, SearchTopicBean o, int position) {
-                Intent intent  = new Intent(getActivity(), SearchKeywordTopicResultActivity.class);
-                intent.putExtra("id",o.getId());
-                Log.i("tag", "onItemClick: "+o.getId());
-                startActivity(intent);
+//                Intent intent  = new Intent(getActivity(), SearchKeywordTopicResultActivity.class);
+//                intent.putExtra("id",o.getId());
+//                Log.i("tag", "onItemClick: "+o.getId());
+                startActivity(CommunityTopicDetailActivity.newInstance(getContext(),o.getId()));
             }
 
             @Override

@@ -3,6 +3,7 @@ package com.example.zjy.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -40,6 +41,8 @@ public class FooterView extends RelativeLayout implements RetrofitUtil.DownListe
         LayoutInflater.from(context).inflate(R.layout.footer_view_home_detail,this,true);
         listView = (ListView) findViewById(R.id.list_view);
         footerLvAdapter = new FooterLvAdapter(context);
+        View comment = LayoutInflater.from(context).inflate(R.layout.layout_head_comment, null);
+        listView.addHeaderView(comment);
         listView.setAdapter(footerLvAdapter);
     }
     public void setID(String id){

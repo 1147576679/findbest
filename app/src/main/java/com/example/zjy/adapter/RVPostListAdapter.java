@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -40,11 +39,6 @@ public class RVPostListAdapter extends CommonAdapter<ItemDetailBean.DataBean.Pos
     //TODO Viewpager 内嵌Viewpager 嵌套的Viewpager不显示
     @Override
     protected void convert(ViewHolder holder, final ItemDetailBean.DataBean.PostListBean postListBean, int position) {
-//        Log.i("tag", "viewpager: "+position);
-//        Log.i("tag", "convert: "+postListBean);
-        //item布局中的viewpager.0
-//        Log.i("tag", "convert: "+postListBean);
-        Log.w("tag", "convert: "+position);
         FrameLayout frameLayout = holder.getView(R.id.frame_layout_vp);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         ViewPager viewPager = new ViewPager(context);
@@ -79,6 +73,13 @@ public class RVPostListAdapter extends CommonAdapter<ItemDetailBean.DataBean.Pos
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(postListBean.getBrand_product().get(0).getUrl()));
 //                intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                context.startActivity(intent);
+            }
+        });
+        holder.setOnClickListener(R.id.rl_buy, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(postListBean.getBrand_product().get(0).getUrl()));
                 context.startActivity(intent);
             }
         });

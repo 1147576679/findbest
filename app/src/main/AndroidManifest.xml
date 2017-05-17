@@ -41,13 +41,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeItemDetailActivity"/>
-        <activity
-            android:name=".SearchActivity"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+        <activity android:name=".SearchActivity"/>
         <activity android:name=".SearchProductActivity"/>
         <activity android:name=".SearchKeywordTopicResultActivity"/>
         <activity android:name=".IdsActivity"/>
-        <activity android:name=".PhotoViewActivity"/>
+        <activity
+            android:name=".PhotoViewActivity"
+            android:theme="@style/transition"/>
         <!-- Jpush的广播接收者 -->
         <receiver
             android:name="com.example.zjy.receiver.PushReceiver"
@@ -112,6 +112,12 @@
         <activity android:name="com.example.zjy.fragment.community.TopicRankActivity">
         </activity>
         <activity android:name="com.example.zjy.fragment.community.PostRankActivity">
+        </activity>
+        <activity android:name=".TestActivity">
+        </activity>
+        <activity android:name=".ArticleActivity">
+        </activity>
+        <activity android:name=".PostActivity">
         </activity>
     </application>
 

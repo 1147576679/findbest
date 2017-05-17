@@ -47,6 +47,7 @@ public class CommunityPostVM {
                 });
     }
 
+
     public interface CallBack{
         void callback(CommunityPostVO communityPostVO);
     }

@@ -3,6 +3,8 @@ package com.example.zjy.fragment.community;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -12,6 +14,7 @@ import com.example.zjy.fragment.community.vm.CommunityPostVM;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
 import com.example.zjy.niklauslibrary.util.ConvenientBannerUtils;
+import com.example.zjy.niklauslibrary.util.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,6 +36,8 @@ public class CommunityPostDetailActivity extends BaseActivity {
     @Bind(R.id.tv_nickname)
     TextView mTvNickname;
     private String mId;
+    @Bind(R.id.checkbox_praise)
+    CheckBox mCheckboxPraise;
 
     @Override
     public int getContentId() {
@@ -71,6 +76,22 @@ public class CommunityPostDetailActivity extends BaseActivity {
                         .time(3000)
                         .build()
                         .ConvenientBanner(mConvenientBanner);
+            }
+        });
+
+    }
+
+    @Override
+    protected void bindListener() {
+        mCheckboxPraise.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mPraiseCount.setText((Integer.parseInt(mPraiseCount.getText().toString())+1)+"");
+                    ToastUtils.showToast(CommunityPostDetailActivity.this,"点赞成功");
+                }else {
+                    mPraiseCount.setText((Integer.parseInt(mPraiseCount.getText().toString())-1)+"");
+                }
             }
         });
     }

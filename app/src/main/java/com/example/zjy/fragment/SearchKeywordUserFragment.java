@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.UserBean;
+import com.example.zjy.bean.event.KeywordEvent;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
@@ -54,12 +55,19 @@ public class SearchKeywordUserFragment extends BaseFragment implements RetrofitU
         return R.layout.fragment_search_keyword_user;
     }
     //通过粘性eventBus接收搜索界面发过的用户输入的关键字
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void getKeyword(String keyword){
+//        Log.i("tag", "SearchKeywordUserFragment收到: "+keyword);
+//        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,user,keyword);
+//        // TODO: 2017/4/10  备选方案
+////        String cache = DiskLruCacheUtil.getJsonCache(url);
+//        loadDatas();
+//    }
+    //通过粘性eventBus接收搜索界面发过的用户输入的关键字
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyword(String keyword){
-        Log.i("tag", "SearchKeywordUserFragment收到: "+keyword);
-        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,user,keyword);
-        // TODO: 2017/4/10  备选方案
-//        String cache = DiskLruCacheUtil.getJsonCache(url);
+    public void getKeyword(KeywordEvent keywordEvent){
+        Log.i("tag", "SearchKeywordSingleFragment收到: "+keywordEvent.keyword);
+        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,user,keywordEvent.keyword);
         loadDatas();
     }
 

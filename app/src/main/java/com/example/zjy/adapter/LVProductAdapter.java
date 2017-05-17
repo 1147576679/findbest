@@ -22,7 +22,7 @@ public class LVProductAdapter extends UniversalAdapter<ItemDetailBean.DataBean.P
         holder.setText(R.id.tv_small_title,product.getTitle());
         holder.setText(R.id.tv_price,"¥"+product.getPrice());
         holder.setText(R.id.tv_likes,product.getLikes());
-        holder.setImageUrl(R.id.iv_big,product.getPic(),R.drawable.bg_personal_wish_item_drawable_day);
+//        holder.setImageUrl(R.id.iv_big,product.getPic(),R.drawable.bg_personal_wish_item_drawable_day);
         holder.setImageUrl(R.id.iv_small,product.getThumbnail_pic(),0);
     }
 

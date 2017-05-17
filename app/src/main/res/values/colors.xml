@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FD6363</color>
     <color name="cube_mints_333333">#ff0</color>
 
     <color name="home_search_background">#F7F7F7</color>
@@ -39,4 +39,10 @@
     <color name="message_push_item_date">#F4F4F4</color>
 
     <color name="post_rank_detail_text">#909090</color>
+
+    <color name="text_color">#4b4a4a</color>
+    <color name="grey_btn_click">#EAEAEA</color>
+
+    <color name="baselib_black_1">#1A1A1A</color>
+    <color name="base_fc_c11">#FFF</color>
 </resources>

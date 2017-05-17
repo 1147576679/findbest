@@ -1,6 +1,9 @@
 package com.example.zjy.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -36,8 +39,10 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
     protected void convert(ViewHolder holder, final ItemDetailBean.DataBean.ContentListBean contentListBean, final int position) {
         LinearLayout ll_dynamic_add = holder.getView(R.id.ll_dynamic_add);
         ll_dynamic_add.removeAllViews();
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,mContext.getResources().getDimensionPixelOffset(R.dimen.internal),0,0);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ll_dynamic_add.getLayoutParams();
+        int offset = mContext.getResources().getDimensionPixelOffset(R.dimen.internal);
+        int margin = mContext.getResources().getDimensionPixelOffset(R.dimen.margin);
+        layoutParams.setMargins(margin,margin,margin,0);
         /**
          * 动态添加TextView和ImageView
          */
@@ -61,7 +66,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                     int image_height = contentListBean.getImage_height();
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    params.setMargins(0,mContext.getResources().getDimensionPixelOffset(R.dimen.internal),0,0);
+                    params.setMargins(0,offset,margin,0);
                     params.width = (int) widthPixels;
                     params.height = (int) ((image_height / image_width ) * widthPixels);
                     imageView.setLayoutParams(params);
@@ -77,15 +82,23 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                 case 2:
                     TextView textView = new PFTextView(mContext);
                     textView.setText(contentListBean.getText_content());
+                    textView.setTextColor(ContextCompat.getColor(mContext,R.color.text_color));
 //                    FontHelper.injectFont(textView);
                     textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getSize(R.dimen.content_list_text_size));
-                    ll_dynamic_add.addView(textView,layoutParams);
+                    ll_dynamic_add.addView(textView);
                     break;
                 case 5:
                     /**
                      * 添加有小图片，价格的物品的视图
                      */
                     View view = LayoutInflater.from(mContext).inflate(R.layout.layout_content_list,null);
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contentListBean.getUrl()));
+                            mContext.startActivity(intent);
+                        }
+                    });
                     TextView tv_small_title = (TextView) view.findViewById(R.id.tv_small_title);
                     TextView tv_price = (TextView) view.findViewById(R.id.tv_price);
                     ImageView iv_small = (ImageView) view.findViewById(R.id.iv_small);
@@ -96,7 +109,7 @@ public class RVContentAdapter extends CommonAdapter<ItemDetailBean.DataBean.Cont
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(iv_small);
-                    ll_dynamic_add.addView(view,layoutParams);
+                    ll_dynamic_add.addView(view);
                     break;
         }
     }

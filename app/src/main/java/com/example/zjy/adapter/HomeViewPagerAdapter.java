@@ -2,7 +2,7 @@ package com.example.zjy.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.zjy.bean.HeadAndTabBean;
 import com.example.zjy.fragment.HomeHotFragment;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by zjy on 2016/12/19.
  */
 
-public class HomeViewPagerAdapter extends FragmentPagerAdapter {
+public class HomeViewPagerAdapter extends FragmentStatePagerAdapter{
     private List<HeadAndTabBean.DataBean.CategoryElementBean> datas;
     public HomeViewPagerAdapter(FragmentManager fm,List<HeadAndTabBean.DataBean.CategoryElementBean> datas) {
         super(fm);

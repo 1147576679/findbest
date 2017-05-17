@@ -1,7 +1,10 @@
 package com.example.zjy.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import com.example.zjy.adapter.SearchKeywordVPAdapter;
@@ -29,6 +32,13 @@ public class SearchKeyWordFragment extends BaseFragment {
 //    public void setKeyword(String keyword){
 //        this.keyword = keyword;
 //    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("tag", "onCreate: 创建了");
+    }
 
     @Override
     protected void init(View view) {

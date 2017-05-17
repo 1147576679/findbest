@@ -3,16 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="8dp"
     android:background="@color/white_color"
     >
     <ImageView
         android:id="@+id/iv_search_product"
         android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        tools:src="@drawable/bg_personal_wish_item_drawable_day"
+        android:layout_height="180dp"
         />
     <TextView
         android:id="@+id/tv_product_name"

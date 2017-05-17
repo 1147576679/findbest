@@ -21,26 +21,29 @@
             android:layout_height="wrap_content"
             tools:text="可莱丝"
             android:layout_marginLeft="8dp"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textColor="@color/text_color"/>
     </LinearLayout>
     <com.example.zjy.widget.PFTextView
         android:id="@+id/tv_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="可莱丝"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"/>
-    <ImageView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/iv_big"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scaleType="fitXY"
-        />
-    <RelativeLayout
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:textColor="@color/text_color"/>
+
+    <LinearLayout
+        android:id="@+id/ll_dynamic_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rv_detail_buy_bg">
+        android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rv_detail_buy_bg"
+        android:layout_marginTop="8dp">
         <ImageView
             android:id="@+id/iv_small"
             android:layout_width="80dp"

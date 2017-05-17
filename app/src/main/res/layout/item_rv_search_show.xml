@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+              android:background="?attr/selectableItemBackground">
     <!--搜索界面展示tab（标签）的内容的RecyclerView的item布局-->
     <ImageView
         android:layout_margin="16dp"

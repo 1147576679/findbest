@@ -3,6 +3,7 @@ package com.example.zjy.niklauslibrary.util;
 import android.content.Context;
 
 import com.bumptech.glide.Glide;
+import com.example.zjy.niklauslibrary.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -15,7 +16,7 @@ public class CirImageViewUtils {
         Glide.with(context)
                 .load(url)
                 .dontAnimate()
-                .centerCrop()
+                .placeholder(R.drawable.bg_personal_wish_item_drawable_day)
                 .into(imageView);
     }
 }

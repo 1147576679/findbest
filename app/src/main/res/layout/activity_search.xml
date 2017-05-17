@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_search"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.zjy.bantang.SearchActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_search"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.example.zjy.bantang.SearchActivity">
     <!--头部返回按钮和搜索框-->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/iv_back_arrow"
-            android:scaleType="center"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:scaleType="center"
             android:src="@drawable/ic_title_bar_back_gray"/>
-        <EditText
-            android:drawableLeft="@drawable/ic_search_left_drawable"
-            android:textSize="14sp"
-            android:layout_width="0dp"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/edittext_shape"
-            android:hint="搜索单品、文章、晒单、用户"
-            android:drawablePadding="8dp"
-            android:id="@+id/edit_text"
             android:layout_marginRight="16dp"
-            android:singleLine="true"
-            android:drawableRight="@drawable/ic_title_bar_search_clear"
-            />
+            android:background="@drawable/edittext_shape"
+            android:padding="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_search_left_drawable"
+                android:drawablePadding="8dp"
+                android:hint="搜索单品、文章、晒单、用户"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:textCursorDrawable="@null"
+                />
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_title_bar_search_clear"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.7dp"
         android:background="@color/divider"/>
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

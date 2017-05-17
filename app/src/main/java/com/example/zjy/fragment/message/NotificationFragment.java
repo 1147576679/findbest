@@ -93,6 +93,8 @@ public class NotificationFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("tag", "onDestroy: ");
+        if(mNotificationController != null){
+            mNotificationController.detachView();
+        }
     }
 }

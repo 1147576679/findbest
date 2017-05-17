@@ -4,9 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <!--首页RecyclerView item 详情多布局之webView 布局-->
-
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/divider"/>
 </LinearLayout>

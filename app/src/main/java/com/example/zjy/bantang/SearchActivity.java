@@ -1,50 +1,46 @@
 package com.example.zjy.bantang;
 
-import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.zjy.bean.event.HotTagEvent;
+import com.example.zjy.bean.event.KeywordEvent;
+import com.example.zjy.fragment.HotTagFragment;
 import com.example.zjy.fragment.SearchCategoryFragment;
 import com.example.zjy.fragment.SearchKeyWordFragment;
 import com.example.zjy.niklauslibrary.base.BaseActivity;
-import com.example.zjy.niklauslibrary.util.RetrofitUtil;
-import com.example.zjy.niklauslibrary.widget.FlowLayout;
-import com.example.zjy.util.Constants;
-import com.example.zjy.util.ParseJsonUtils;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseActivity implements RetrofitUtil.DownListener {
+public class SearchActivity extends BaseActivity {
     //搜索框
     @Bind(R.id.edit_text)
     EditText editText;
-    /**
-     * 点击搜索框弹出热门标签的弹出框
-     */
-    private PopupWindow popupWindow;
-    private FlowLayout flowLayout;
 
     //占位用的
     @Bind(R.id.frame_layout)
     FrameLayout frame_layout;
 
+    @Bind(R.id.iv_clear)
+    ImageView mIvClear;
+
+    private SearchCategoryFragment mSearchCategoryFragment;
+    private SearchKeyWordFragment mSearchKeyWordFragment;
+    private HotTagFragment mHotTagFragment;
 
     @Override
     public int getContentId() {
@@ -53,39 +49,74 @@ public class SearchActivity extends BaseActivity implements RetrofitUtil.DownLis
 
     @Override
     protected void init() {
+        EventBus.getDefault().register(this);
         //一开始就加载有分类的搜索fragment
-        showFragment(R.id.frame_layout,new SearchCategoryFragment());
-        popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setOutsideTouchable(true);
-        View contentView= LayoutInflater.from(this).inflate(R.layout.popupwindow_flowlayout,null);
-        flowLayout = (FlowLayout) contentView.findViewById(R.id.flow_layout);
-        popupWindow.setContentView(contentView);
+        addSearchCategoryFragment();
+        mSearchKeyWordFragment = new SearchKeyWordFragment();
+        mHotTagFragment = new HotTagFragment();
+        //预加载
+        preInit();
     }
 
-    @Override
-    protected void loadDatas() {
-        new RetrofitUtil(this).setDownListener(this).downJson(Constants.URL_HOTTAG,0x001);
+    private void preInit() {
+        getSupportFragmentManager().beginTransaction()
+                        .add(R.id.frame_layout,
+                                mSearchKeyWordFragment,
+                                mSearchKeyWordFragment.getClass().getName())
+                        .commit();
+        getSupportFragmentManager().beginTransaction()
+                .hide(mSearchKeyWordFragment)
+                .commit();
     }
 
     //返回按钮
-    @OnClick(R.id.iv_back_arrow)
-    public void click(ImageView imageView){
-        finish();
-        //动画
-//        overridePendingTransition();
+    @OnClick({R.id.iv_back_arrow,R.id.iv_clear})
+    public void click(ImageView imageView) {
+        switch (imageView.getId()){
+            case R.id.iv_back_arrow:
+                finish();
+                break;
+            case R.id.iv_clear:
+                editText.setText("");
+                break;
+        }
     }
-    @OnClick(R.id.edit_text)
-    public void editClick(EditText editText){
-        showFragment(R.id.frame_layout,new SearchKeyWordFragment());
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(HotTagEvent hotTagEvent){
+        Log.i("tag", "onEvent: 接收到消息");
+        editText.setText(hotTagEvent.str);
+        editText.setSelection(editText.getText().length());
+        goSearch(hotTagEvent.str);
     }
+
 
     @Override
     protected void bindListener() {
         //关键字搜索监听加载数据
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+//                    getSupportFragmentManager().beginTransaction()
+//                            .hide(mSearchCategoryFragment)
+//                            .add(R.id.frame_layout,
+//                                    mHotTagFragment,
+//                                    mHotTagFragment.getClass().getName())
+//                            .addToBackStack(mHotTagFragment.getClass().getName())
+//                            .commit();
+                    showFragment(R.id.frame_layout,mHotTagFragment);
+                }
+            }
+        });
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                if(TextUtils.isEmpty(s)){
+                    mIvClear.setVisibility(View.INVISIBLE);
+                }else {
+                    mIvClear.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -95,78 +126,80 @@ public class SearchActivity extends BaseActivity implements RetrofitUtil.DownLis
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                //输入框监听到文本有变化将弹出框隐藏
-//                popupWindow.dismiss();
                 /**
                  * 发布一个粘性事件，给搜索关键字的fragment把 keyword传过去
                  * 发布粘性的原因：因为关键字搜索fragment还没有创建
                  */
-                EventBus.getDefault().postSticky(s.toString());
-                String url = String.format(Constants.URL_KEYWORD_SEARCH, s.toString());
-                new RetrofitUtil(SearchActivity.this).setDownListener(SearchActivity.this).downJson(url,0x002);
-                if(TextUtils.isEmpty(s.toString())){
-                    showFragment(R.id.frame_layout,new SearchCategoryFragment());
+
+                EventBus.getDefault().postSticky(new KeywordEvent(s.toString()));
+                if (TextUtils.isEmpty(s.toString())) {
+//                    getSupportFragmentManager().beginTransaction()
+//                            .hide(mSearchKeyWordFragment)
+//                            .show(mHotTagFragment)
+//                            .commit();
+                    showFragment(R.id.frame_layout,mHotTagFragment);
+                    mIvClear.setVisibility(View.INVISIBLE);
+                }else {
+                    mIvClear.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String query = editText.getText().toString();
+                    goSearch(query);
+                    return true;
+                }
+                return false;
             }
         });
     }
 
-    @Override
-    public Object paresJson(String json, int requestCode) {
-        switch (requestCode){
-            case 0x001:
-                return ParseJsonUtils.parseHotTag(json);
-            case 0x002:
-                break;
-        }
-       return null;
+    private void addSearchCategoryFragment() {
+        mSearchCategoryFragment = new SearchCategoryFragment();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.frame_layout,
+//                        mSearchCategoryFragment,
+//                        mSearchCategoryFragment.getClass().getName())
+//                .show(mSearchCategoryFragment).commit();
+        showFragment(R.id.frame_layout,mSearchCategoryFragment);
     }
 
-    @Override
-    public void downSucc(Object object, int requestCode) {
-        switch (requestCode){
-            case 0x001:
-                if(object != null){
-                    List<String> data = (List<String>) object;
-                    initHotTag(data);
-                }
-                break;
-            case 0x002:
-                Log.i("tag", "keyword: "+editText.getText().toString());
-                break;
-        }
-
-    }
-    //往流式布局添加热门标签
-    private void initHotTag(List<String> data) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(8,8,8,8);
-        for (int i = 0; i < data.size(); i++) {
-            final TextView textView = new TextView(this);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                textView.setBackgroundResource(R.drawable.flag_01);
-                textView.setText(data.get(i));
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        editText.setText(textView.getText());
-                    }
-                });
-                textView.setTextAppearance(this,R.style.text_flag_01);
-                textView.setTextColor(getResources().getColor(R.color.unselect_search));
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getSize(R.dimen.hottag_btn_size));
-                flowLayout.addView(textView,params);
-            }
+    private void goSearch(String query) {
+        if (!TextUtils.isEmpty(query)) {
+//            if(getSupportFragmentManager().findFragmentByTag(mSearchKeyWordFragment.getClass().getName())== null) {
+//                EventBus.getDefault().postSticky(query.toString());
+//                getSupportFragmentManager().beginTransaction()
+//                        .hide(mHotTagFragment)
+//                        .add(R.id.frame_layout,
+//                                mSearchKeyWordFragment,
+//                                mSearchKeyWordFragment.getClass().getName())
+//                        .addToBackStack(mSearchKeyWordFragment.getClass().getName())
+//                        .commit();
+//            }
+            showFragment(R.id.frame_layout,mSearchKeyWordFragment);
+            EventBus.getDefault().postSticky(new KeywordEvent(query));
         }
     }
 
     @Override
-    public void fail(Throwable throwable) {
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            onBackPressed();
+        }
+        return super.onKeyDown(keyCode, event);
     }
-    //将dimen资源文件中dp 转换为px
-    public float getSize(int id){
-        return getResources().getDimensionPixelSize(id);
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

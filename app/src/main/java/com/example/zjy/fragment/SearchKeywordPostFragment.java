@@ -9,8 +9,11 @@ import android.view.View;
 
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.SearchPostBean;
+import com.example.zjy.bean.event.KeywordEvent;
+import com.example.zjy.fragment.community.CommunityPostDetailActivity;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.adapter.CommonAdapter;
+import com.example.zjy.niklauslibrary.rvhelper.adapter.MultiItemTypeAdapter;
 import com.example.zjy.niklauslibrary.rvhelper.base.ViewHolder;
 import com.example.zjy.niklauslibrary.util.CirImageViewUtils;
 import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
@@ -51,12 +54,20 @@ public class SearchKeywordPostFragment extends BaseFragment implements RetrofitU
     }
 
     //通过粘性eventBus接收搜索界面发过的用户输入的关键字
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void getKeyword(String keyword){
+//        Log.i("tag", "SearchKeywordPostFragment收到: "+keyword);
+//        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,post,keyword);
+//        // TODO: 2017/4/10  备选方案
+////        String cache = DiskLruCacheUtil.getJsonCache(url);
+//        loadDatas();
+//    }
+
+    //通过粘性eventBus接收搜索界面发过的用户输入的关键字
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyword(String keyword){
-        Log.i("tag", "SearchKeywordPostFragment收到: "+keyword);
-        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,post,keyword);
-        // TODO: 2017/4/10  备选方案
-//        String cache = DiskLruCacheUtil.getJsonCache(url);
+    public void getKeyword(KeywordEvent keywordEvent){
+        Log.i("tag", "SearchKeywordSingleFragment收到: "+keywordEvent.keyword);
+        url = String.format(Constants.URL_KEYWORD_SEARCH_SINGLE_TOPIC_USER_POST,post,keywordEvent.keyword);
         loadDatas();
     }
     //加载关键字数据
@@ -82,6 +93,17 @@ public class SearchKeywordPostFragment extends BaseFragment implements RetrofitU
                         .setImageUrl(R.id.iv_search_product,searchPostBean.getMiddle_pic_url());
             }
         };
+        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener<SearchPostBean>() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, SearchPostBean o, int position) {
+                startActivity(CommunityPostDetailActivity.newInstance(getContext(),o.getId()));
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, SearchPostBean o, int position) {
+                return false;
+            }
+        });
         rv_post.setAdapter(commonAdapter);
         rv_post.setLayoutManager(new GridLayoutManager(getContext(),2));
     }

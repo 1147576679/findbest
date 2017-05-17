@@ -30,4 +30,9 @@
     <style name="dialog_style">
         <item name="android:windowBackground">@color/publish_dialog_bg</item>
     </style>
+
+    <style name="transition" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

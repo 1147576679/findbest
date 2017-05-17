@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.zjy.adapter.SearchProductRVAdapter;
 import com.example.zjy.bantang.R;
 import com.example.zjy.bean.SearchProductBean;
+import com.example.zjy.bean.event.KeywordEvent;
 import com.example.zjy.niklauslibrary.base.BaseFragment;
 import com.example.zjy.niklauslibrary.rvhelper.divider.DividerGridItemDecoration;
 import com.example.zjy.niklauslibrary.util.DiskLruCacheUtil;
@@ -39,30 +40,29 @@ public class SearchKeywordSingleFragment extends BaseFragment implements Retrofi
     @Bind(R.id.rv_search_product)
     RecyclerView rv_search_product;
     private SearchProductRVAdapter searchProductRVAdapter;
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-        Log.i("tag", "onCreate: ");
-    }
 
     @Override
     public int getContentId() {
         return R.layout.fragment_search_keyword_single;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("tag", "SearchKeywordSingleFragment: 创建了");
+    }
+
     //通过粘性eventBus接收搜索界面发过的用户输入的关键字
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyword(String keyword){
-//        Toast.makeText(getContext(), "SearchKeywordSingleFragment收到"+keyword, Toast.LENGTH_SHORT).show();
-        Log.i("tag", "SearchKeywordSingleFragment收到: "+keyword);
-        this.keyword = keyword;
-        Log.i("tag", "SearchKeywordSingleFragment收到: "+url);
+    public void getKeyword(KeywordEvent keywordEvent){
+        Log.i("tag", "SearchKeywordSingleFragment收到: "+keywordEvent.keyword);
+        this.keyword = keywordEvent.keyword;
         loadDatas();
     }
 
     @Override
     protected void init(View view) {
+        EventBus.getDefault().register(this);
         searchProductRVAdapter = new SearchProductRVAdapter(getContext());
         rv_search_product.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.VERTICAL,false));
         rv_search_product.setAdapter(searchProductRVAdapter);

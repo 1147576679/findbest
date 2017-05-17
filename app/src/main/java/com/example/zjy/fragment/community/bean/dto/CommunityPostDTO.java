@@ -1,7 +1,5 @@
 package com.example.zjy.fragment.community.bean.dto;
 
-import android.util.Log;
-
 import com.example.zjy.fragment.community.bean.CommunityPostVO;
 import com.example.zjy.fragment.community.bean.Transform;
 
@@ -67,13 +65,12 @@ public class CommunityPostDTO implements Transform<CommunityPostVO>{
         CommunityPostVO communityPostVO = new CommunityPostVO();
         communityPostVO.ivUrl = new ArrayList<>();
         List<DataBean.PostBean.PicsBean> pics = data.getPost().getPics();
-        Log.i("tag", "transform: "+pics);
         for (DataBean.PostBean.PicsBean pic : pics) {
             communityPostVO.ivUrl.add(pic.getUrl());
         }
         communityPostVO.avatar = data.getPost().getUser().getAvatar();
         communityPostVO.content = data.getPost().getContent();
-        communityPostVO.praises = data.getPost().getDynamic().getPraises()+ " 次赞";
+        communityPostVO.praises = data.getPost().getDynamic().getPraises();
         communityPostVO.username = data.getPost().getUser().getNickname();
         communityPostVO.dataStr = data.getPost().getDatestr();
         return communityPostVO;

@@ -32,7 +32,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:inputType="phone"
         android:hint="手机号"
+        android:textCursorDrawable="@null"
         android:drawableLeft="@drawable/edittext_phone"/>
 
     <EditText
@@ -42,8 +44,10 @@
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPassword"
         android:singleLine="true"
         android:hint="密码"
+        android:textCursorDrawable="@null"
         android:drawableLeft="@drawable/edittext_password"/>
 
     <Button
